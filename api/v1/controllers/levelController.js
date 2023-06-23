@@ -3,10 +3,11 @@ const LevelService = require("../services/levelService");
 const createLevel = async(req, res) => {
 	try {
 		let data;
-		if (req.body.name && req.body.savings) {
+		if (req.body.name && req.body.savings && req.body.rank) {
 			data = {
 				name: req.body.name,
 				savings: req.body.savings,
+				rank: req.body.rank
 			}
 		} else {
 			throw {

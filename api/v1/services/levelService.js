@@ -1,10 +1,15 @@
 const Level = require("../database/Level");
+const LEVEL_FIELDS = ['name', 'savings', 'rank'];
 
 const createLevel = async (data) => {
 	try {
-		let name = String(data.name);
-		let savings = Number(data.savings);
-		const newLevel = await Level.createLevel({name: name, savings: savings});
+		let levelData = {}
+		for (key in data) {
+			if (LEVEL_FIELDS.indexOf(key) !== -1) {
+				levelData[key] = data[key];
+			}
+		}
+		const newLevel = await Level.createLevel(levelData);
 		return newLevel;
 	} catch(error) {
 		throw error;
@@ -14,6 +19,21 @@ const createLevel = async (data) => {
 const getOneLevel = async (levelId) => {
 	try {
 		const level = await Level.getOneLevel(levelId);
+		return level;
+	} catch(error) {
+		throw error;
+	}
+}
+
+const getLevelByRank = async (rank) => {
+	try {
+		if (!rank) {
+			throw {
+				status: 400,
+				message: "Must include a rank"
+			}
+		}
+		const level = await Level.getLevelByRank(rank);
 		return level;
 	} catch(error) {
 		throw error;
@@ -55,6 +75,7 @@ const deleteOneLevel = async (levelId) => {
 module.exports = {
 	createLevel,
 	getOneLevel,
+	getLevelByRank,
 	getAllLevels,
 	updateLevel,
 	deleteOneLevel,

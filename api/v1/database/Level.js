@@ -9,10 +9,7 @@ const createLevel = async (data) => {
 		};
 	}
 	try {
-		let newLevel = new Level({
-			name: data.name,
-			savings: data.savings,
-		});
+		let newLevel = new Level(data);
 		await newLevel.save();
 		return newLevel;
 	}catch(error) {
@@ -40,7 +37,7 @@ const getOneLevel = async (levelId) => {
 
 const getAllLevels = async () => {
 	try {
-		const levels = await Level.find({});
+		const levels = await Level.find();
 		if (!levels || levels.length === 0) {
 			throw {
 				status: 400,
@@ -48,6 +45,18 @@ const getAllLevels = async () => {
 			}
 		}
 		return levels;
+	} catch(error) {
+		throw {
+			status: error?.status || 500,
+			message: error?.message || error
+		}
+	}
+}
+
+const getLevelByRank = async (rank) => {
+	try {
+		const level = await Level.findOne({rank: rank});
+		return level
 	} catch(error) {
 		throw {
 			status: error?.status || 500,
@@ -90,6 +99,7 @@ module.exports = {
 	createLevel,
 	updateLevel,
 	getOneLevel,
+	getLevelByRank,
 	getAllLevels,
 	deleteOneLevel,
 }
