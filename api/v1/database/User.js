@@ -80,7 +80,7 @@ const updateUser = async (userId, changes) => {
 			}
 		}
 		await user.save();
-		const { password, commissionDue, isSuperAdmin, ...otherData } = user._doc;
+		const { password, isSuperAdmin, ...otherData } = user._doc;
 		return otherData;
 	} catch(error) {
 		throw { status: error?.status || 500, message: error?.message || error }
