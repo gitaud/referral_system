@@ -155,16 +155,17 @@ const updateUserAddReferral = async (referrerId, referredId) => {
 
 const updateUserCommissionDue = async (userId, amount, reset) => {
 	try {
-		let user
+		let user;
 		if (reset) {
 			commissionDue = await User.getOneUser(userId).commissionDue;
-			user = await userService.updateUser(userId, {commissionDue: 0});
+			user = await User.updateUser(userId, {commissionDue: 0});
 			smsSender.sendCommissionPaidMsg(user, commissionDue);
 		} else {
-			user = await userService.getOneUser(userId);
-			user = await userService.updateUser(userId, { commissionDue: amount + user.commissionDue });
+			user = await User.getOneUser(userId);
+			user = await User.updateUser(userId, { commissionDue: amount + user.commissionDue });
 			smsSender.sendCommissionEarnedMsg(user, amount);
 		}
+		return true;
 	} catch(error) {
 		throw error;
 	}
