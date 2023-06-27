@@ -31,7 +31,7 @@ const getOneUser = async (userId) => {
 
 const searchUser = async (searchParams) => {
 	try {
-		const user = await User.findOne(searchParams).select('id name level nextLevelRank email phone referred_by referrals_made');
+		const user = await User.findOne(searchParams).select('id name level nextLevelRank email phone referred_by password referrals_made');
 		if (!user) {
 			throw {
 				status: 400,
