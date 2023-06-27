@@ -34,14 +34,14 @@ const verifyToken = (req, res, next) => {
 	} catch(error) {
 		return res
 			.status(error?.status || 400)
-			.json(error?.message || error)
+			.json({status: 'FAILED', data: { error: error?.message || error}});
 	}
 }
 
 const verifyAdmin = (req, res, next) => {
 	try {
 		verifyToken(req, res, () => {
-			if (!req.user.isAdmin) {
+			if (!req.user.isAdmin && !req.user.isSuperAdmin) {
 				throw {
 					status: 403,
 					message: "FORBIDDEN"
@@ -50,9 +50,7 @@ const verifyAdmin = (req, res, next) => {
 			next();
 		});
 	} catch (error) {
-		return res
-			.status(error?.status || 400)
-			.json(error?.message || error)
+		throw error;
 	}
 }
 
@@ -70,14 +68,14 @@ const verifySuperAdmin = (req, res, next) => {
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
-			.json(error?.message || error)
+			.json({ status: 'FAILED', data: { error: error?.message || error } })
 	}
 }
 
 const verifyAuthorized = (req, res, next) => {
 	try {
 		verifyToken(req, res, async () => {
-			if ((req.params.id !== req.user.id) || req.user.isAdmin ) {
+			if ((req.params.id !== req.user.id) && !req.user.isAdmin && !req.user.isSuperAdmin ) {
 				throw {
 					status: 403,
 					message: "FORBIDDEN"
@@ -88,7 +86,7 @@ const verifyAuthorized = (req, res, next) => {
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
-			.json(error?.message || error)
+			.json({ status: 'FAILED', data: { error: error?.message || error } })
 	}
 }
 
