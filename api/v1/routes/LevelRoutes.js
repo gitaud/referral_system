@@ -2,14 +2,14 @@ const router = require("express").Router();
 const TokenHelper = require("../helpers/TokenHelper");
 const LevelController = require("../controllers/LevelController");
 
-router.get("/:id", LevelController.getOneLevel);
+router.get("/:id", TokenHelper.verifyAdmin, LevelController.getOneLevel);
 
-router.get("/", LevelController.getAllLevels);
+router.get("/", TokenHelper.verifyAdmin, LevelController.getAllLevels);
 
-router.post("/", LevelController.createLevel);
+router.post("/", TokenHelper.verifyAdmin, LevelController.createLevel);
 
-router.patch("/:id", LevelController.updateLevel);
+router.patch("/:id", TokenHelper.verifyAdmin, LevelController.updateLevel);
 
-router.delete("/:id", LevelController.deleteOneLevel);
+router.delete("/:id", TokenHelper.verifyAdmin, LevelController.deleteOneLevel);
 
 module.exports = router;

@@ -1,20 +1,21 @@
 const router = require("express").Router();
-const userController = require("../controllers/UserController");
+const UserController = require("../controllers/UserController");
+const TokenHelper = require("../helpers/TokenHelper");
 
-router.get("/search", userController.searchUser);
+router.get("/search", TokenHelper.verifyAdmin, UserController.searchUser);
 
-router.get("/:id", userController.getOneUser);
+router.get("/:id", TokenHelper.verifyAuthorized, UserController.getOneUser);
 
-router.get("/", userController.getAllUsers);
+router.get("/", TokenHelper.verifyAdmin, UserController.getAllUsers);
 
-router.post("/", userController.createNewUser);
+router.post("/", TokenHelper.verifyAdmin, UserController.createNewUser);
 
-router.patch("/:id", userController.updateUser);
+router.patch("/:id", TokenHelper.verifyAuthorized, UserController.updateUser);
 
-router.patch("/referral/add/:id", userController.updateUserAddReferral);
+router.patch("/referral/add/:id", TokenHelper.verifyAdmin, UserController.updateUserAddReferral);
 
-router.patch("/level/add/:id", userController.updateUserIncreaseLevel);
+router.patch("/level/add/:id", TokenHelper.verifyAdmin, UserController.updateUserIncreaseLevel);
 
-router.delete("/:id", userController.deleteUser);
+router.delete("/:id", TokenHelper.verifySuperAdmin, UserController.deleteUser);
 
 module.exports = router;
