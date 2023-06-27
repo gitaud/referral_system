@@ -4,10 +4,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 // const v1Router = require("v1/routes");
-const authRouter = require("./v1/routes/authRoutes");
-const levelRouter = require("./v1/routes/levelRoutes");
-const transactionRouter = require("./v1/routes/transactionRoutes");
-const userRouter = require("./v1/routes/userRoutes");
+const AuthRouter = require("./v1/routes/AuthRoutes");
+const LevelRouter = require("./v1/routes/LevelRoutes");
+const TransactionRouter = require("./v1/routes/TransactionRoutes");
+const UserRouter = require("./v1/routes/UserRoutes");
 
 // Load .env
 dotenv.config();
@@ -19,10 +19,10 @@ app.use(cors());
 app.use(express.json());
 
 // Set up Routes
-app.use("api/v1/auth", authRouter);
-app.use("/api/v1/levels", levelRouter);
-app.use("/api/v1/transactions", transactionRouter);
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1/levels", LevelRouter);
+app.use("/api/v1/transactions", TransactionRouter);
+app.use("/api/v1/users", UserRouter);
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI, { 
