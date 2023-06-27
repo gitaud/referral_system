@@ -1,7 +1,5 @@
-const CryptoJS = require("crypto-js");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const AuthService = require("../services/AuthService");
 
 dotenv.config();
 
@@ -28,11 +26,11 @@ const verifyToken = (req, res, next) => {
 			}
 		}
 		const token = authHeader.split(" ")[1];
-		jwt.verify(token, process.env.JWT_SECRET, (err, res) => {
-			if (err) throw { status: 401, message: "Token not valid" }
+		jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+			if (error) throw { status: 401, message: "Token not valid" }
 			req.user = user;
 			next();
-		})
+		});
 	} catch(error) {
 		return res
 			.status(error?.status || 400)
@@ -42,7 +40,15 @@ const verifyToken = (req, res, next) => {
 
 const verifyAdmin = (req, res, next) => {
 	try {
-		verifyToken()
+		verifyToken(req, res, () => {
+			if (!req.user.isAdmin) {
+				throw {
+					status: 403,
+					message: "FORBIDDEN"
+				}
+			}
+			next();
+		});
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
@@ -52,8 +58,15 @@ const verifyAdmin = (req, res, next) => {
 
 const verifySuperAdmin = (req, res, next) => {
 	try {
-		next();
-
+		verifyToken(req, res, () => {
+			if (!req.user.isSuperAdmin) {
+				throw {
+					status: 403,
+					message: "FORBIDDEN"
+				}
+			}
+			next();
+		});
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
@@ -63,8 +76,15 @@ const verifySuperAdmin = (req, res, next) => {
 
 const verifyAuthorized = (req, res, next) => {
 	try {
-		next();
-
+		verifyToken(req, res, async () => {
+			if ((req.params.id !== req.user.id) || req.user.isAdmin ) {
+				throw {
+					status: 403,
+					message: "FORBIDDEN"
+				}
+			}
+			next();
+		});
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
