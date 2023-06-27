@@ -1,6 +1,7 @@
 const Transaction = require("../database/Transaction");
 const UserService = require("./UserService");
 const LevelService = require("./LevelService");
+const RoundOffHelper = require("../helpers/RoundOffHelper.js");
 
 const createTransaction = async (data) => {
 	try {
@@ -17,7 +18,7 @@ const createTransaction = async (data) => {
 			}
 		}
 		let commission = Number(data.amount) * (level.savings / 100);
-		newTransaction.commission = commission;
+		newTransaction.commission = RoundOffHelper.roundToZero(commission);
 		let transaction = await Transaction.createTransaction(newTransaction);
 		let userUpdated = await UserService.updateUserCommissionDue(transaction.customer_id, transaction.commission, false);
 		if (transaction && userUpdated) {
