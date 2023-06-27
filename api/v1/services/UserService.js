@@ -1,9 +1,9 @@
 const dotenv = require("dotenv");
 
 const User = require("../database/User");
-const LevelService = require("./levelService");
-const hasher = require("../utils/hasher")
-const smsSender = require("../utils/smsSender")
+const LevelService = require("./LevelService");
+const HashHelper = require("../helpers/HashHelper")
+const SMSHelper = require("../helpers/SMSHelper")
 
 dotenv.config();
 const USER_DETAIL_FIELDS = ['name', 'phone', 'email', 'isAdmin','isSuperAdmin'];
@@ -18,7 +18,7 @@ const createNewUser = async (data) => {
 				userData[key] = data[key];
 			}
 		}
-		userData.password = hasher.hash(data.password);
+		userData.password = HashHelper.hash(data.password);
 		let newUser = await User.createNewUser(userData);
 		return newUser;
 	} catch (error) {
@@ -108,7 +108,7 @@ const updateUserDetails = async (userId, changes) => {
 		let usrChanges = {};
 		for (key in changes) {
 			if (key === "password") {
-				usrChanges.password = hasher.hash(changes[key]);
+				usrChanges.password = HashHelper.hash(changes[key]);
 			} else if (USER_DETAIL_FIELDS.indexOf(key) !== -1) {
 				usrChanges[key] = changes[key];
 			}
@@ -127,7 +127,7 @@ const updateUserIncreaseLevel = async (user) => {
 			if (user.referrals_made.length >= user.nextLevelRank * MIN_REFERRALS_TO_ELEVATE_RANK) {
 				nextLevel = await LevelService.getLevelByRank(user.nextLevelRank);
 				updatedUser = await User.updateUser(user._id, {level: nextLevel._id});
-				smsSender.sendLevelUpdateMsg(updatedUser, nextLevel);
+				SMSHelper.sendLevelUpdateMsg(updatedUser, nextLevel);
 			}
 			updatedUser = await User.updateUser(updatedUser._id, {nextLevelRank: nextLevel.rank + 1});
 		}
@@ -159,11 +159,11 @@ const updateUserCommissionDue = async (userId, amount, reset) => {
 		if (reset) {
 			commissionDue = await User.getOneUser(userId).commissionDue;
 			user = await User.updateUser(userId, {commissionDue: 0});
-			smsSender.sendCommissionPaidMsg(user, commissionDue);
+			SMSHelper.sendCommissionPaidMsg(user, commissionDue);
 		} else {
 			user = await User.getOneUser(userId);
 			user = await User.updateUser(userId, { commissionDue: amount + user.commissionDue });
-			smsSender.sendCommissionEarnedMsg(user, amount);
+			SMSHelper.sendCommissionEarnedMsg(user, amount);
 		}
 		return true;
 	} catch(error) {

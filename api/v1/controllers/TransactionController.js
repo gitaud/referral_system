@@ -1,4 +1,4 @@
-const TransactionService = require("../services/transactionService");
+const TransactionService = require("../services/TransactionService");
 
 const createTransaction = async (req, res) => {
 	try {

@@ -1,4 +1,4 @@
-const LevelService = require("../services/levelService");
+const LevelService = require("../services/LevelService");
 
 const createLevel = async(req, res) => {
 	try {

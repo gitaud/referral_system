@@ -1,8 +1,8 @@
-const userService = require("../services/userService");
+const UserService = require("../services/UserService");
 
 const createNewUser = async (req, res) => {
 	try {
-		const user = await userService.createNewUser(req.body);
+		const user = await UserService.createNewUser(req.body);
 		return res.json({ status: 'OK', data: user })
 	} catch (error) {
 		return res
@@ -20,7 +20,7 @@ const getOneUser = async (req, res) => {
 				message: "User ID must be input"
 			}
 		}
-		const user = await userService.getOneUser(userId);
+		const user = await UserService.getOneUser(userId);
 		return res.json({status: 'OK', data: user});
 	} catch (error) {
 		return res
@@ -38,7 +38,7 @@ const searchUser = async (req, res) => {
 				message: "Search parameter must be phone, email or name"
 			}
 		}
-		const user = await userService.searchUser({email, phone, name});
+		const user = await UserService.searchUser({email, phone, name});
 		return res.json({ status: 'OK', data: user });
 	} catch (error) {
 		return res
@@ -50,7 +50,7 @@ const searchUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
 	const { level, referred_by, length, page, sort } = req.query;
 	try {
-		const users = await userService.getAllUsers({level, referred_by, length, page, sort});
+		const users = await UserService.getAllUsers({level, referred_by, length, page, sort});
 		return res.json({status: 'OK', data: users})
 	} catch(error) {
 		return res
@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
 				message: "User id not provided"
 			}
 		}
-		const updatedUser = await userService.updateUserDetails(userId, req.body);
+		const updatedUser = await UserService.updateUserDetails(userId, req.body);
 		return res.json({ status: 'OK', data: updatedUser });
 	} catch (error) {
 		return res
@@ -93,7 +93,7 @@ const updateUserAddReferral = async (req, res) => {
 				message: "Referred person's id must be provided"
 			}
 		}
-		let results = await userService.updateUserAddReferral(referrerId, referralId);
+		let results = await UserService.updateUserAddReferral(referrerId, referralId);
 		return res.json({status: 'OK', data: results });
 	} catch (error) {
 		return res
@@ -111,9 +111,9 @@ const updateUserIncreaseLevel = async (req, res) => {
 				message: "No user id provided"
 			}
 		}
-		let user = await userService.getOneUser(userId);
-		await userService.updateUserIncreaseLevel(user);
-		const updatedUser = await userService.getOneUser(userId);
+		let user = await UserService.getOneUser(userId);
+		await UserService.updateUserIncreaseLevel(user);
+		const updatedUser = await UserService.getOneUser(userId);
 		return res
 			.json({ status: 'OK', data: updatedUser });
 	} catch(error) {
@@ -126,7 +126,7 @@ const updateUserIncreaseLevel = async (req, res) => {
 const deleteUser = async (req, res) => {
 	try {
 		const userId = req.params.id;
-		await userService.deleteUser(userId);
+		await UserService.deleteUser(userId);
 		return res.json({status: 'OK'});
 	} catch (error) {
 		return res

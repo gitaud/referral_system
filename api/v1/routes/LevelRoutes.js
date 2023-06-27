@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const verifyToken = require("../utils/verifyToken");
-const LevelController = require("../controllers/levelController");
+const TokenHelper = require("../helpers/TokenHelper");
+const LevelController = require("../controllers/LevelController");
 
 router.get("/:id", LevelController.getOneLevel);
 

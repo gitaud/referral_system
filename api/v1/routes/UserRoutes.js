@@ -1,6 +1,5 @@
 const router = require("express").Router();
-
-const userController = require("../controllers/userController");
+const userController = require("../controllers/UserController");
 
 router.get("/search", userController.searchUser);
 
