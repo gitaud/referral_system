@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import {
   useAuthContext,
+  initiateLogin,
   loginSuccess,
   loginFailure,
 } from '../../../context/AuthContext';
@@ -17,7 +18,7 @@ const LoginFormSchema = yup.object().shape({
 });
 
 const LoginFormLogic = ({defaultValues, onSubmit }) => {
-  const { dispatch } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   const navigate = useNavigate();
   
   const form = useForm({
@@ -28,14 +29,16 @@ const LoginFormLogic = ({defaultValues, onSubmit }) => {
 
   const handleSubmit = async (data) => {
     try {
+      dispatch(initiateLogin());
       const response = await onSubmit(data);
-      dispatch(loginSuccess(response.data));
+      console.log(response);
+      dispatch(loginSuccess(response));
       navigate("/");
     } catch(error) {
-      dispatch(loginFailure(error.data));
+      dispatch(loginFailure(error.cause.response.data));
     }
   }
-  return <LoginFormView form={form} onSubmit={handleSubmit} />
+  return <LoginFormView form={form} onSubmit={handleSubmit} error={user.error} />
 }
 
 export default LoginFormLogic;

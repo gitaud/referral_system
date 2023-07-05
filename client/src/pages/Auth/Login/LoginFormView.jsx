@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './LoginForm.css';
 
-const LoginFormView = ({ form, onSubmit }) => {
+const LoginFormView = ({ form, onSubmit, error }) => {
 	const { formState, register, handleSubmit } = form;
 	const { errors, isSubmitting } = formState;
 	return(
@@ -12,14 +13,16 @@ const LoginFormView = ({ form, onSubmit }) => {
 					placeholder="admin@gmail.com"
 					{ ...register("email") }
 				/>
-				{errors && <p>{errors?.email?.message} </p>}
+				{errors && <p className="error">{errors?.email?.message} </p>}
 				<input 
 					type="password" 
 					placeholder="password"
 					{ ...register("password") }
 					/>
-				{errors && <p>{errors?.password?.message} </p>}
+				{errors && <p className="error">{errors?.password?.message} </p>}
 				<button disabled={ isSubmitting } type="submit" >Login</button>
+				{ error && <p className="error">{error} </p>}
+				<Link to="/reset/password" className="link">Reset Password</Link>
 			</form>
 		</div>
 	)

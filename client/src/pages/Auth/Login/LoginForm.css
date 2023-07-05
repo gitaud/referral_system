@@ -19,4 +19,16 @@ button {
 
 .error {
   color: red;
+  margin: 5px 3px;
+  padding: 3px;
+}
+
+.link {
+  color: #f20263;
+  margin: 5px 3px;
+  padding: 3px;
+}
+
+.link:hover {
+  color: gray;
 }
