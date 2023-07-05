@@ -3,11 +3,11 @@ const UserService = require("../services/UserService");
 const createNewUser = async (req, res) => {
 	try {
 		const user = await UserService.createNewUser(req.body);
-		return res.json({ status: 'OK', data: user })
+		return res.json(user)
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 };
 
@@ -21,11 +21,11 @@ const getOneUser = async (req, res) => {
 			}
 		}
 		const user = await UserService.getOneUser(userId);
-		return res.json({status: 'OK', data: user});
+		return res.json(user);
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 };
 
@@ -39,11 +39,11 @@ const searchUser = async (req, res) => {
 			}
 		}
 		const user = await UserService.searchUser({email, phone, name});
-		return res.json({ status: 'OK', data: user });
+		return res.json(user);
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 }
 
@@ -51,11 +51,11 @@ const getAllUsers = async (req, res) => {
 	const { level, referred_by, length, page, sort } = req.query;
 	try {
 		const users = await UserService.getAllUsers({level, referred_by, length, page, sort});
-		return res.json({status: 'OK', data: users})
+		return res.json(users)
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({status: 'FAILED', data: { error: error?.message || error }})
+			.json(error?.message || error);
 	}
 };
 
@@ -69,11 +69,11 @@ const updateUser = async (req, res) => {
 			}
 		}
 		const updatedUser = await UserService.updateUserDetails(userId, req.body);
-		return res.json({ status: 'OK', data: updatedUser });
+		return res.json(updatedUser);
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 };
 
@@ -94,11 +94,11 @@ const updateUserAddReferral = async (req, res) => {
 			}
 		}
 		let results = await UserService.updateUserAddReferral(referrerId, referralId);
-		return res.json({status: 'OK', data: results });
+		return res.json(results);
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({status: 'FAILED', data: { error: error?.message || error }});
+			.json(error?.message || error);
 	}
 }
 
@@ -115,11 +115,11 @@ const updateUserIncreaseLevel = async (req, res) => {
 		await UserService.updateUserIncreaseLevel(user);
 		const updatedUser = await UserService.getOneUser(userId);
 		return res
-			.json({ status: 'OK', data: updatedUser });
+			.json(updatedUser);
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({status: 'FAILED', data: {error: error?.message || error }})
+			.json(error?.message || error);
 	}
 }
 
@@ -131,7 +131,7 @@ const deleteUser = async (req, res) => {
 	} catch (error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 };
 

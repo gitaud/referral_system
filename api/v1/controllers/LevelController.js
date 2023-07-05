@@ -16,11 +16,11 @@ const createLevel = async(req, res) => {
 			}
 		}
 		let level = await LevelService.createLevel(data);
-		return res.json({status: 'OK', data: level })
+		return res.json(level)
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 }
 
@@ -34,22 +34,22 @@ const getOneLevel = async (req, res) => {
 			}
 		}
 		const level = await LevelService.getOneLevel(req.params.id);
-		return res.json({status: 'OK', data: level});
+		return res.json(level);
 	}catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error }})
+			.json(error?.message || error);
 	}
 } 
 
 const getAllLevels = async (req, res) => {
 	try {
 		const levels = await LevelService.getAllLevels();
-		return res.json({status: 'OK', data: levels});
+		return res.json(levels);
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({status: 'FAILED', data: { error: error?.message || error} })
+			.json(error?.message || error);
 	}
 }
 
@@ -58,11 +58,11 @@ const updateLevel = async (req, res) => {
 		const levelId = req.params.id;
 		const data = req.body
 		const updatedLevel = await LevelService.updateLevel(levelId, data);
-		return res.json({status: 'OK', data: updatedLevel })
+		return res.json(updatedLevel)
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error }})
+			.json(error?.message || error);
 	}
 }
 
@@ -74,7 +74,7 @@ const deleteOneLevel = async (req, res) => {
 	} catch(error) {
 		return res
 			.status(error?.status || 500)
-			.json({ status: 'FAILED', data: { error: error?.message || error }})
+			.json(error?.message || error);
 	}
 }
 

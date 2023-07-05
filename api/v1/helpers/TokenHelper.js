@@ -34,7 +34,7 @@ const verifyToken = (req, res, next) => {
 	} catch(error) {
 		return res
 			.status(error?.status || 400)
-			.json({status: 'FAILED', data: { error: error?.message || error}});
+			.json(error?.message || error);
 	}
 }
 
@@ -50,7 +50,9 @@ const verifyAdmin = (req, res, next) => {
 			next();
 		});
 	} catch (error) {
-		throw error;
+		return res
+			.status(error?.status || 400)
+			.json(error?.message || error);
 	}
 }
 
@@ -68,7 +70,7 @@ const verifySuperAdmin = (req, res, next) => {
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 }
 
@@ -86,7 +88,7 @@ const verifyAuthorized = (req, res, next) => {
 	} catch (error) {
 		return res
 			.status(error?.status || 400)
-			.json({ status: 'FAILED', data: { error: error?.message || error } })
+			.json(error?.message || error);
 	}
 }
 

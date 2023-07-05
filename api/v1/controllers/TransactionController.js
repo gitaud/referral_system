@@ -10,11 +10,11 @@ const createTransaction = async (req, res) => {
 			}
 		}
 		const transaction = await TransactionService.createTransaction({recorded_by, amount, customer_id, customer_level_id });
-		return res.json({ status: 'OK', data: transaction });
+		return res.json(transaction);
 	} catch(error) {
-		return res.
-			status(error?.status || 500)
-			.json({status: 'FAILED', message: error?.message || error })
+		return res
+			.status(error?.status || 500)
+			.json(error?.message || error);
 	}
 }
 
@@ -28,11 +28,11 @@ const getOneTransaction = async (req, res) => {
 			}
 		} 
 		const transaction = await TransactionService.getOneTransaction(transactionId);
-		return res.json({ status: 'OK', data: transaction})
+		return res.json(transaction);
 	} catch (error) {
-		return res.
-			status(error?.status || 500)
-			.json({ status: 'FAILED', message: error?.message || error })
+		return res
+			.status(error?.status || 500)
+			.json(error?.message || error);
 	}
 }
 
@@ -46,11 +46,11 @@ const getAllTransactions = async (req, res) => {
 				message: "Could not find transactions"
 			}
 		}
-		return res.json({ status: 'OK', data: transactions })
+		return res.json(transactions);
 	} catch (error) {
-		return res.
-			status(error?.status || 500)
-			.json({ status: 'FAILED', message: error?.message || error })
+		return res
+			.status(error?.status || 500)
+			.json(error?.message || error);
 	}
 }
 

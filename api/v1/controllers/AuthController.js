@@ -10,11 +10,11 @@ const login = async (req, res) => {
       }
     }
     const user = await AuthService.login({ email, password });
-    return res.json({ status: 'OK', data: user });
+    return res.json(user);
   } catch (error) {
     return res
       .status(error?.status || 500)
-      .json({ status: 'FAILED', data: { error: error?.message || error } })
+      .json(error?.message || error);
   }
 }
 
@@ -32,7 +32,7 @@ const handlePasswordResetRequest = async (req, res) => {
   } catch(error) {
     return res
       .status(error?.status || 500)
-      .json({status: 'FAILED', data: { error: error?.message || error }})
+      .json(error?.message || error);
   }
 }
 
@@ -41,11 +41,11 @@ const resetPassword = async (req, res) => {
     const userId = req.user.id;
     const password = req.body.password;
     const user = await AuthService.resetPassword(userId, password);
-    return res.json({ status: 'OK', data: user });
+    return res.json(user);
   } catch (error) {
     return res
       .status(error?.status || 500)
-      .json({ status: 'FAILED', data: { error: error?.message || error } })
+      .json(error?.message || error);
   }
 }
 
