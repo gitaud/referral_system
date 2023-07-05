@@ -5,24 +5,24 @@ export const loginRequest = async (user) => {
 		const response = await publicRequest.post("/auth/login", user);
 		return response.data
 	} catch(error) {
-		return error.response?.data || "Failed";
+		throw new Error("Login Error", { cause : error })
 	}
 }
 
 export const requestPasswordReset = async (data) => {
 	try {
 		const response = await publicRequest.post("/auth/password/reset/request", data);
-		return response.data;
-	} catch(error) {
-		return error.response?.data || "Failed";
+		return response.data
+	} catch (error) {
+		throw new Error("Password Reset Request Error", { cause: error })
 	}
 }
 
-export const resetPassword = async (data, token) => {
+export const resetPassword = async (token, data) => {
 	try {
-		const response = await userRequest(token).post("/auth/password/reset", data)
-		return response.data;
+		const response = await userRequest(token).post("/auth/password/reset", data);
+		return response.data
 	} catch (error) {
-		return error.response?.data || "Failed";
+		throw new Error("Password reset error", { cause: error });
 	}
 }
