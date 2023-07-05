@@ -7,6 +7,7 @@ const Sidebar = lazy(() => import('./common-components/sidebar/Sidebar'));
 const Topbar = lazy(() => import( './common-components/topbar/Topbar'));
 const Login = lazy(() => import( './pages/Auth/Login/LoginForm'));
 const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordReset/RequestPasswordResetForm'));
+const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswordForm'));
 
 const Homepage = () => {
 
@@ -40,6 +41,7 @@ function App() {
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
+						<Route path="/reset/:token" element={<ResetPassword />} />
 					</Routes>
 				</Suspense>
 			</Router>
