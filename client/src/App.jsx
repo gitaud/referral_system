@@ -8,6 +8,7 @@ const Topbar = lazy(() => import( './common-components/topbar/Topbar'));
 const Login = lazy(() => import( './pages/Auth/Login/LoginForm'));
 const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordReset/RequestPasswordResetForm'));
 const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswordForm'));
+const UserList = lazy(() => import('./pages/Users/ListUsers/ListUsers'));
 
 const Homepage = () => {
 
@@ -37,7 +38,7 @@ function App() {
 				<Suspense fallback={<div><p>Loading</p></div>}>
 					<Routes>
 						<Route path="/" element={ <Homepage />}>
-
+							<Route path="/users" element={ <UserList /> } />
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
