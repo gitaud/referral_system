@@ -31,7 +31,6 @@ const LoginFormLogic = ({defaultValues, onSubmit }) => {
     try {
       dispatch(initiateLogin());
       const response = await onSubmit(data);
-      console.log(response);
       dispatch(loginSuccess(response));
       navigate("/");
     } catch(error) {
