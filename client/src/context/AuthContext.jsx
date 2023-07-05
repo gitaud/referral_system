@@ -42,7 +42,6 @@ export const logout = () => {
 
 const authReducer = (state, action) => {
   localStorage.setItem('USER_STATE', null);
-  console.log(action);
   switch(action.type) {
     case INITIATING_LOGIN:
       return { isLoggedIn: false, authToken: null, name: null, error: null }
