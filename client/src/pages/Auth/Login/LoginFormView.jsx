@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './LoginForm.css';
+import '../styles/AuthForms.css';
 
 const LoginFormView = ({ form, onSubmit, error }) => {
 	const { formState, register, handleSubmit } = form;

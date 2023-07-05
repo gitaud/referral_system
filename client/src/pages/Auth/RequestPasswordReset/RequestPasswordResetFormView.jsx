@@ -1,5 +1,5 @@
 import React from 'react';
-import "./RequestPasswordResetForm.css";
+import '../styles/AuthForms.css';
 
 export default function RequestPasswordResetFormView({ form, onSubmit, success }) {
   const { formState, register, handleSubmit } = form;
