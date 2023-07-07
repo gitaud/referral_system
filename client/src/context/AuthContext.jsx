@@ -1,22 +1,27 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { validateToken } from '../apiCalls/authApiCalls';
 
 const AuthContext = createContext(null);
 
+const defaultValues = {
+  isLoggedIn: false,
+  authToken: null,
+  name: null,
+  error: null
+}
 let initialValues;
 
 try {
-  const data = localStorage.getItem("USER_STATE");
+  const data = JSON.parse(localStorage.getItem("USER_STATE"));
   if (!data) {
     throw new Error("No data found");
   }
-  initialValues = data;
-} catch(error) {
-  initialValues = {
-    isLoggedIn: false,
-    authToken: null,
-    name: null,
-    error: null
+  let response = await validateToken(data.authToken);
+  if (response.status === 'OK') {
+    initialValues = data;
   }
+} catch(error) {
+  initialValues = defaultValues;
 }
 
 export const INITIATING_LOGIN = 'INITIATING LOGIN'
@@ -41,10 +46,9 @@ export const logout = () => {
 }
 
 const authReducer = (state, action) => {
-  localStorage.setItem('USER_STATE', null);
   switch(action.type) {
     case INITIATING_LOGIN:
-      return { isLoggedIn: false, authToken: null, name: null, error: null }
+      return defaultValues;
     case LOGIN_SUCCESS:
       let userData = { isLoggedIn: true, authToken: action.data.token, name: action.data.name, error: null};
       localStorage.setItem('USER_STATE', JSON.stringify(userData));
@@ -52,12 +56,8 @@ const authReducer = (state, action) => {
     case LOGIN_FAILURE:
       return { isLoggedIn: false, authToken: null, name: null, error: action.error }
     case LOGOUT:
-      return {
-        isLoggedIn: false,
-        authToken: null,
-        name: null,
-        error: null
-      };
+      localStorage.setItem('USER_STATE', JSON.stringify(defaultValues))
+      return defaultValues;
     default:
       return state;
   }
@@ -66,7 +66,7 @@ const authReducer = (state, action) => {
 
 export const AuthContextProvider = (props) => {
 
-  const [ user, dispatch ] = useReducer(authReducer, initialValues)
+  const [ user, dispatch ] = useReducer(authReducer, initialValues);
 
   return(
     <AuthContext.Provider value={{ user, dispatch }} {...props} />

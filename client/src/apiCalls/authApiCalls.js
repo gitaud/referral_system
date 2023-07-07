@@ -26,3 +26,12 @@ export const resetPassword = async (token, data) => {
 		throw new Error("Password reset error", { cause: error });
 	}
 }
+
+export const validateToken = async (token) => {
+	try {
+		const response = await userRequest(token).get("/auth");
+		return response.data;
+	} catch(error) {
+		throw new Error("Token is invalid", { cause: error });
+	}
+}
