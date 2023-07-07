@@ -49,8 +49,19 @@ const resetPassword = async (req, res) => {
   }
 }
 
+const checkTokenValid = async (req, res) => {
+  try {
+    return res.json({status: 'OK'});
+  } catch(error) {
+    return res
+      .status(error?.status || 500)
+      .json(error?.message || error);
+  }
+}
+
 module.exports = {
   login,
   resetPassword,
-  handlePasswordResetRequest
+  handlePasswordResetRequest,
+  checkTokenValid
 }

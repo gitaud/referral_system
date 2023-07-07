@@ -8,4 +8,6 @@ router.post("/password/reset/request", AuthController.handlePasswordResetRequest
 
 router.post("/password/reset", TokenHelper.verifyToken, AuthController.resetPassword);
 
+router.get("/", TokenHelper.verifyToken, AuthController.checkTokenValid);
+
 module.exports = router;
