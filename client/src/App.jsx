@@ -1,35 +1,14 @@
-import React, { useLayoutEffect, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet, useNavigate } from 'react-router-dom';
+import React, { lazy, Suspense  } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { AuthContextProvider, useAuthContext } from './context/AuthContext';
-import useSetDocumentTitle from './common-hooks/setDocumentTitle';
-const Sidebar = lazy(() => import('./common-components/sidebar/Sidebar'));
-const Topbar = lazy(() => import( './common-components/topbar/Topbar'));
+import { AuthContextProvider} from './context/AuthContext';
+const ProtectedRoute = lazy(() => import('./common-components/protected-routes/ProtectedRoute'));
 const Login = lazy(() => import( './pages/Auth/Login/LoginForm'));
 const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordReset/RequestPasswordResetForm'));
 const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswordForm'));
 const UserList = lazy(() => import('./pages/Users/ListUsers/ListUsers'));
 
-const Homepage = () => {
 
-	const navigate = useNavigate();
-	const { user } = useAuthContext();
-	useLayoutEffect(() => {
-		if (user.isLoggedIn === false) {
-			navigate("/login");
-		}
-	})
-	useSetDocumentTitle("Home");
-	return(
-		<>
-			<Topbar />
-			<div className="container">
-				<Sidebar />
-				<Outlet />
-			</div>
-		</>
-	)
-}
 
 function App() {
 	return (
@@ -37,7 +16,7 @@ function App() {
 			<Router>
 				<Suspense fallback={<div><p>Loading</p></div>}>
 					<Routes>
-						<Route path="/" element={ <Homepage />}>
+						<Route path="/" element={<ProtectedRoute />}>
 							<Route path="/users" element={ <UserList /> } />
 						</Route>
 						<Route path="/login" element={<Login />} />
