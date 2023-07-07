@@ -1,4 +1,4 @@
-form {
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,17 +7,17 @@ form {
   width: 100vw;
 }
 
-input {
+.input {
   padding: 10px;
   margin-bottom: 20px;
 }
 
-button {
+.button {
   padding: 10px;
   width: 150px;
 }
 
-label {
+.label {
   margin-bottom: 15px;
 }
 
