@@ -5,7 +5,7 @@ import { DeleteOutline } from '@mui/icons-material';
 import { deleteUser, getAllUsers } from "../../../apiCalls/userApiCalls";
 import { useAuthContext } from '../../../context/AuthContext';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
-import './ListUsers.css';
+import styles from './ListUsers.module.css';
 
 export default function UserList() {
 
@@ -14,8 +14,9 @@ export default function UserList() {
 	const [users, setUsers] = useState([]);
 	const { user } = useAuthContext();
 
-	const token = JSON.parse(user).authToken;
-	console.log(token);
+	const token = user.authToken
+
+
 	const handleDelete = async (id) => {
 		try {
 			await deleteUser(token, id);
@@ -30,7 +31,6 @@ export default function UserList() {
 		const getUsers = async () => {
 			if (token) {
 				const users = await getAllUsers(token);
-				console.log(users);
 				setUsers([...users]);
 			}
 		};
@@ -44,8 +44,8 @@ export default function UserList() {
 			flex: 0.33,
 			renderCell: (params) => {
 				return (
-					<Link className="userListLink" to={"/user/" + params.row._id}>
-						<div className="userListUser">
+					<Link className={styles.userListLink} to={"/user/" + params.row._id}>
+						<div className={styles.userListUser}>
 							{params.row.name}
 						</div>
 					</Link>
@@ -61,23 +61,22 @@ export default function UserList() {
 				return (
 					<>
 						<Link to={"/user/" + params.row._id}>
-							<button className="userListEdit">Edit</button>
+							<button className={styles.userListEdit}>Edit</button>
 						</Link>
-						<DeleteOutline className="userListDelete" onClick={() => handleDelete(params.row._id)} />
+						<DeleteOutline className={styles.userListDelete} onClick={() => handleDelete(params.row._id)} />
 					</>
 				)
 			}
 		}
 	];
 	return (users &&
-		<div className="userList">
+		<div className={styles.userList}>
 			<DataGrid
 				rows={users}
 				disableSelectionOnClick
 				columns={columns}
 				autoPageSize
 				pagination
-				checkboxSelection
 				getRowId={row => row._id} />
 		</div>
 	)
