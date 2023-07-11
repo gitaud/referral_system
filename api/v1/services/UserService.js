@@ -6,7 +6,7 @@ const HashHelper = require("../helpers/HashHelper")
 const SMSHelper = require("../helpers/SMSHelper")
 
 dotenv.config();
-const USER_DETAIL_FIELDS = ['name', 'phone', 'email', 'isAdmin','isSuperAdmin'];
+const USER_DETAIL_FIELDS = ['name', 'phone', 'email', 'isAdmin','isSuperAdmin', 'level'];
 const MAX_REFERRAL_LEVEL_RANK = Number(process.env.MAX_REFERRAL_LEVEL_RANK);
 const MIN_REFERRALS_TO_ELEVATE_RANK = Number(process.env.MIN_REFERRALS_TO_ELEVATE_RANK);
 
