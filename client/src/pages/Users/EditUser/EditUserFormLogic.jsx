@@ -32,7 +32,7 @@ const EditUserFormLogic = ({ defaultValues, onSubmit }) => {
 			Swal.fire({
 				icon: 'success',
 				title: 'User info saved',
-				showConfirmButton: false,
+				showConfirmButton: true,
 				timer: 2000
 			})
 			navigate("/users");
