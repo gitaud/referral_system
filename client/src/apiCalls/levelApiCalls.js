@@ -1,6 +1,6 @@
 import { userRequest } from './baseApiCall';
 
-export const createLevel = async (token, data) = {
+export const createLevel = async (token, data) => {
 	try {
 		const response = await userRequest(token).post("/levels", data);
 		return response.data;
