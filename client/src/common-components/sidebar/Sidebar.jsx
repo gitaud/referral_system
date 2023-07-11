@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+  GroupsOutlined,
   PermIdentity,
   Storefront,
 } from '@mui/icons-material';
@@ -15,8 +16,14 @@ export default function Sidebar() {
           <ul className={styles.sidebarList}>
             <Link to="/users" className={styles.link}>
               <li className={styles.sidebarListItem}>
-                <PermIdentity className={styles.sidebarIcon} />
+                <GroupsOutlined className={styles.sidebarIcon} />
                 View All Users
+              </li>
+            </Link>
+            <Link to="/users/new" className={styles.link}>
+              <li className={styles.sidebarListItem}>
+                <PermIdentity className={styles.sidebarIcon} />
+                Create new User
               </li>
             </Link>
             <Link to="/transactions" className={styles.link}>
