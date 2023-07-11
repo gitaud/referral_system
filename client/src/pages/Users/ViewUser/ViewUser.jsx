@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { useAuthContext } from '../../../context/AuthContext';
 import { getOneUser } from '../../../apiCalls/userApiCalls';
 import { getOneLevel } from '../../../apiCalls/levelApiCalls';
-import EditOrCreateUserForm from '../EditOrCreateUser/EditOrCreateUserForm';
+import EditUserForm from '../EditUser/EditUserForm';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ViewUser.module.css";
 
@@ -27,12 +27,8 @@ export default function User() {
 			try {
 				let usr = await getOneUser(user.authToken, usrId);
 				setUsrData(usr);
-				console.log(usr);
-				if (usr.level) {
-					let level = await getOneLevel(user.authToken, usr.level);
-					console.log(level);
-					setLevel(level.name);
-				}
+				let level = await getOneLevel(user.authToken, usr.level);
+				setLevel(level.name);
 			} catch(error) {
 				Swal.fire({
 					icon: 'error',
@@ -43,7 +39,7 @@ export default function User() {
 			}
 		}
 		getUser();
-	}, [user, usrId]);
+	}, [user, usrId])
 
 
 	return (usrData &&
@@ -88,7 +84,7 @@ export default function User() {
 						</div>
 					</div>
 				</div>
-				<EditOrCreateUserForm reqType={"edit"} usrData={usrData}/>
+				<EditUserForm usrData={usrData}/>
 			</div>
 		</div>
 	);
