@@ -30,6 +30,7 @@ export default function User() {
 				let level = await getOneLevel(user.authToken, usr.level);
 				setLevel(level.name);
 			} catch(error) {
+				console.log(error.cause);
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops',
@@ -46,11 +47,23 @@ export default function User() {
 		<div className={styles.user}>
 			<div className={styles.userTitleContainer}>
 				<h1 className={styles.userTitle}>{usrData.name} </h1>
-				<Link to="/users/new">
-					<button className={styles.userAddButton}>
-						Create User
-					</button>
-				</Link>
+				<div className={styles.userButtons}>
+					<Link to={`/user/transactions/${usrData._id}`}>
+						<button className={styles.userAddButton}>
+							View User Transactions
+						</button>
+					</Link>
+					<Link to={`/user/transactions/add/${usrData._id}`}>
+						<button className={styles.userAddButton}>
+							Create User Transaction
+						</button>
+					</Link>
+					<Link to={`/user/referral/add/${usrData._id}`}>
+						<button className={styles.userAddButton}>
+							Add Referral
+						</button>
+					</Link>
+				</div>
 			</div>
 			<div className={styles.userContainer}>
 				<div className={styles.userShow}>

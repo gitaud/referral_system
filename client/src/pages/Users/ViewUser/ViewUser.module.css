@@ -9,6 +9,18 @@
   justify-content: space-between;
 }
 
+.userTitle {
+  flex: 2;
+}
+
+.userButtons {
+  flex: 3;
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .userAddButton {
   min-width: 115px;
   border: none;
@@ -101,5 +113,10 @@
   .userShow {
     width: 80%;
     flex: 1;
+  }
+
+  .userButtons {
+    width: 200px;
+    flex-direction: column;
   }
 }
