@@ -3,7 +3,6 @@ import { logout, useAuthContext } from '../../context/AuthContext';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../sidebar/Sidebar';
 import Topbar from '../topbar/Topbar';
-import useSetDocumentTitle from '../../common-hooks/setDocumentTitle'
 
 
 const ProtectedRoute = ({ redirectPath ="/login"}) => {
@@ -16,7 +15,6 @@ const ProtectedRoute = ({ redirectPath ="/login"}) => {
 			navigate(redirectPath);
 		}
 	}, [user, dispatch, navigate, redirectPath])
-	useSetDocumentTitle("Home");
 	return (
 		<>
 			<Topbar />
