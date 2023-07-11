@@ -10,7 +10,7 @@ const LoginFormView = ({ form, onSubmit, error }) => {
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<input className={styles.input}
 					type="text" 
-					placeholder="admin@gmail.com"
+					placeholder="user@gmail.com"
 					{ ...register("email") }
 				/>
 				{errors && <p className={styles.error}>{errors?.email?.message} </p>}
