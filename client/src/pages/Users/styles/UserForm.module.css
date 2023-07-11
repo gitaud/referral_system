@@ -1,3 +1,18 @@
+.user {
+  flex: 4;
+  padding: 20px;
+}
+
+.userContainer {
+  display: flex;
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+  margin-top: 2px;
+}
+
 .userUpdate {
   flex: 2;
   padding: 20px;
@@ -18,6 +33,10 @@
   margin-top: 20px;
 }
 
+.userUpdateLeft {
+  flex: 3;
+}
+
 .userUpdateItem {
   display: flex;
   flex-direction: column;
@@ -31,8 +50,9 @@
 
 .userUpdateInput {
   border: none;
-  width: 250px;
+  min-width: 250px;
   height: 30px;
+  margin-right: 15px;
   border-bottom: 1px solid gray;
 }
 
@@ -43,6 +63,7 @@
 }
 
 .userUpdateRight {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
