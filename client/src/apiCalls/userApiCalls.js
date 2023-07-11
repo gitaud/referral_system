@@ -2,8 +2,8 @@ import { userRequest } from './baseApiCall';
 
 export const createUser = async(token, data) => {
 	try {
-		const user = await userRequest(token).post("/users", data);
-		return user;
+		const response = await userRequest(token).post("/users", data);
+		return response.data;
 	} catch(error) {
 		throw new Error("Failed to create user", { cause: error })
 	}
