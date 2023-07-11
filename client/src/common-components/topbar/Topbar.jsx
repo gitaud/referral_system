@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+  GroupsOutlined,
   PermIdentity,
+  PowerSettingsNew,
   Storefront,
-  PowerSettingsNew
 } from '@mui/icons-material';
 import styles from "./Topbar.module.css";
 import { logout, useAuthContext } from '../../context/AuthContext'
@@ -23,6 +24,11 @@ export default function Topbar() {
         <div className={styles.topRight}>
           <div className={styles.nav}>
             <Link to="/users" className={styles.link}>
+              <GroupsOutlined />
+            </Link>
+          </div>
+          <div className={styles.nav}>
+            <Link to="/users/new" className={styles.link}>
               <PermIdentity />
             </Link>
           </div>
