@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Link } from "react-router-dom"
 import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
@@ -27,7 +27,7 @@ export default function UserList() {
 		}
 	}
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const getUsers = async () => {
 			if (token) {
 				const users = await getAllUsers(token);
