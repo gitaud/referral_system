@@ -40,9 +40,10 @@ const CreateUserFormView = ( { form, onSubmit } ) => {
 								</select>
 								{errors && <div className={styles.error}>{errors?.isAdmin?.message}</div>}
 							</div>
-						</div>
-						<div className={styles.userUpdateRight}>
-							<button className={styles.userUpdateButton} disabled={isSubmitting} type="submit">Create</button>
+							<div className={styles.userUpdateItem}>
+
+								<button className={styles.userUpdateButton} disabled={isSubmitting} type="submit">Create</button>
+							</div>
 						</div>
 					</form>
 				</div>
