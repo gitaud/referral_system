@@ -142,8 +142,8 @@ const updateUserIncreaseLevel = async (user) => {
 
 const updateUserAddReferral = async (referrerId, referredId) => {
 	try {
-		let referrer = await User.updateUser(referrerId, {referrals_made: referredId});
 		let referred = await User.updateUser(referredId, {referred_by: referrerId});
+		let referrer = await User.updateUser(referrerId, {referrals_made: referredId});
 		if (referrer.referrals_made.length >= referrer.nextLevelRank * MIN_REFERRALS_TO_ELEVATE_RANK) {
 			await updateUserIncreaseLevel(referrer);
 		}
