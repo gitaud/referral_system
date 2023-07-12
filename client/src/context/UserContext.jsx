@@ -26,12 +26,12 @@ const initialValues = {
 	error: null
 }
 
-export const userContextReducer = (action, state) => {
+export const userContextReducer = (state, action) => {
 	switch(action.type) {
 		case INITIALIZE:
-			return {};
+			return initialValues;
 		case SUCCESS:
-			return { user: action.user }
+			return { user: action.data, error: null };
 		case FAILURE:
 			return { user: null, error: action.error };
 		default:
