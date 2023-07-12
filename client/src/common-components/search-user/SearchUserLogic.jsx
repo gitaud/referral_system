@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
-import { useUserContext, success, failure } from '../../context/UserContext';
+import { useUserContext, success, failure, initialize } from '../../context/UserContext';
 import SearchUserView from './SearchUserView';
 
 const SearchUserSchema = yup.object().shape({
@@ -23,6 +23,7 @@ const SearchUserLogic = ({ defaultValues, onSubmit }) => {
 
 	const handleSubmit = async (data) => {
 		try {
+			dispatch(initialize());
 			const searchParam = data.param + '=' + data.query;
 			Swal.fire({
 				title: 'Searching',
