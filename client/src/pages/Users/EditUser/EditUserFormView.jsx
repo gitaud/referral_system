@@ -34,11 +34,12 @@ export default function EditUserFormView({ form, onSubmit, error, user }) {
 						</select>
 						{ errors && <div className={styles.error}>{ errors?.isAdmin?.message }</div> }
 					</div>
+					<div className={styles.userUpdateItem}>
+
+						<button className={styles.userUpdateButton} disabled={isSubmitting} type="submit">Update</button>
+						{ error && <div className={styles.error}>Error! {error.data } </div>}
+					</div>
 				</div>
-				<div className={styles.userUpdateRight}>
-					<button className={styles.userUpdateButton} disabled={isSubmitting} type="submit">Update</button>
-				</div>
-			{ error && <div className={styles.error}>Error! {error.data } </div>}
 			</form>
 		</div>
 	);
