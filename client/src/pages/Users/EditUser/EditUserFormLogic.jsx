@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,7 +13,6 @@ const EditUserFormSchema = yup.object().shape({
 });
 
 const EditUserFormLogic = ({ id, defaultValues, onSubmit }) => {
-	const navigate = useNavigate();
 	const form = useForm({
 		mode: "onSubmit",
 		defaultValues,
@@ -35,9 +33,12 @@ const EditUserFormLogic = ({ id, defaultValues, onSubmit }) => {
 					title: 'User info saved',
 					showConfirmButton: true,
 					timer: 2000
+				}).then(result => {
+					if (result.isConfirmed) {
+						window.location.reload();
+					}
 				})
-			}, 1500)
-			navigate(`/user/${id}`);
+			}, 1500);
 		} catch(error) {
 			console.log(error);
 			Swal.fire({
