@@ -93,6 +93,12 @@ const updateUserAddReferral = async (req, res) => {
 				message: "Referred person's id must be provided"
 			}
 		}
+		if (referrerId === referralId) {
+			throw {
+				status: 400,
+				message: "A user cannot refer himself"
+			}
+		}
 		let results = await UserService.updateUserAddReferral(referrerId, referralId);
 		return res.json(results);
 	} catch (error) {
