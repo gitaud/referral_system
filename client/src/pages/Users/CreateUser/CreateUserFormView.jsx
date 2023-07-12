@@ -45,6 +45,8 @@ const CreateUserFormView = ( { form, onSubmit } ) => {
 								<button className={styles.userUpdateButton} disabled={isSubmitting} type="submit">Create</button>
 							</div>
 						</div>
+						<div className={styles.userUpdateRight}>
+						</div>
 					</form>
 				</div>
 			</div>
