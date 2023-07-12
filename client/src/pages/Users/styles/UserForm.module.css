@@ -98,6 +98,20 @@
   font-weight: 600;
 }
 
+.pItemTitle {
+  margin-top: 15px;
+  font-weight: 400;
+  font-size: 20px;
+  color: #444;
+}
+
+.pItem {
+  margin-top: 15px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #444;
+}
+
 @media screen and (max-width: 450px) {
   .userContainer {
     width: 100%;
