@@ -120,20 +120,25 @@ const updateUserDetails = async (userId, changes) => {
 	}
 }
 
-const updateUserIncreaseLevel = async (user) => {
+const updateUserIncreaseLevel = async (user, underling=false) => {
 	try {
-		let updatedUser, nextLevel;
+		let updatedUser, promoted;
+		const nextLevel = await LevelService.getLevelByRank(user.nextLevelRank);
+		const referrals_made = user.referrals_made.length;
 		if (user.nextLevelRank <= MAX_REFERRAL_LEVEL_RANK) {
-			if (user.referrals_made.length >= user.nextLevelRank * MIN_REFERRALS_TO_ELEVATE_RANK) {
-				nextLevel = await LevelService.getLevelByRank(user.nextLevelRank);
+			if (underling) {
+				user = await User.updateUser(user._id, { nextLevelRank: nextLevel.rank + 1 });
+			}
+			if (referrals_made !== 0 && referrals_made % 5 === 0) {
 				updatedUser = await User.updateUser(user._id, {level: nextLevel._id});
 				SMSHelper.sendLevelUpdateMsg(updatedUser, nextLevel);
+				updatedUser = await User.updateUser(updatedUser._id, {nextLevelRank: nextLevel.rank + 1});
+				promoted = true;
 			}
-			updatedUser = await User.updateUser(updatedUser._id, {nextLevelRank: nextLevel.rank + 1});
-		}
-		if (user.referred_by !== null) {
-			let referrer = await User.getOneUser(user.referred_by);
-			await updateUserIncreaseLevel(referrer);
+			if (user.referred_by !== null && ( promoted || underling )) {
+				let referrer = await User.getOneUser(user.referred_by);
+				await updateUserIncreaseLevel(referrer, true);
+			}
 		}
 	} catch(error) {
 		throw error;
@@ -145,7 +150,7 @@ const updateUserAddReferral = async (referrerId, referredId) => {
 		let referred = await User.updateUser(referredId, {referred_by: referrerId});
 		let referrer = await User.updateUser(referrerId, {referrals_made: referredId});
 		if (referrer.referrals_made.length >= referrer.nextLevelRank * MIN_REFERRALS_TO_ELEVATE_RANK) {
-			await updateUserIncreaseLevel(referrer);
+			await updateUserIncreaseLevel(referrer, false);
 		}
 		return [ referrer, referred ];
 	} catch(error) {
