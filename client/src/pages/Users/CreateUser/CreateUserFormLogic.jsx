@@ -50,19 +50,24 @@ const CreateUserFormLogic = ({ defaultValues, user, onSubmit }) => {
 				didOpen: () => Swal.showLoading(),
 			})
 			const newUser = await onSubmit(userData);
-			Swal.fire({
-				icon: 'success',
-				title: 'User info saved',
-				showConfirmButton: true,
-				timer: 2000
-			})
-			navigate(`/user/${newUser._id}`);
+			setTimeout(() => {
+				Swal.fire({
+					icon: 'success',
+					title: 'User info saved',
+					showConfirmButton: true,
+					timer: 2000
+				}).then(result => {
+					if (result.isConfirmed) {
+						navigate(`/user/${newUser._id}`);
+					}
+				})
+			}, 1500)
 		} catch (error) {
 			console.log(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
-				text: 'Something went wrong!'
+				text: `${error?.cause?.response?.data || "Something went wrong!"}`
 			});
 		}
 	}
