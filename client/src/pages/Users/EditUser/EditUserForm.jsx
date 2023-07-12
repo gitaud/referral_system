@@ -11,7 +11,7 @@ const EditUserForm = ({ usrData }) => {
 	const handleSubmit = async (data) => {
 		return updateUser(user.authToken, usrData._id, data);
 	}
-	return (<EditUserFormLogic defaultValues={defaultValues} onSubmit={handleSubmit}/>)
+	return (<EditUserFormLogic id={usrData._id} defaultValues={defaultValues} onSubmit={handleSubmit}/>)
 }
 
 export default EditUserForm;
