@@ -1,8 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { Link } from "react-router-dom"
 import { DataGrid } from '@mui/x-data-grid';
-import { DeleteOutline } from '@mui/icons-material';
-import { deleteUser, getAllUsers } from "../../../apiCalls/userApiCalls";
+import { getAllUsers } from "../../../apiCalls/userApiCalls";
 import { useAuthContext } from '../../../context/AuthContext';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from './ListUsers.module.css';
@@ -15,17 +14,6 @@ export default function UserList() {
 	const { user } = useAuthContext();
 
 	const token = user.authToken
-
-
-	const handleDelete = async (id) => {
-		try {
-			await deleteUser(token, id);
-			let allUsers = users.filter(user => user._id !== id);
-			setUsers([...allUsers]);
-		} catch(error) {
-			console.log(error);
-		}
-	}
 
 	useLayoutEffect(() => {
 		const getUsers = async () => {
@@ -61,9 +49,8 @@ export default function UserList() {
 				return (
 					<>
 						<Link to={"/user/" + params.row._id}>
-							<button className={styles.userListEdit}>Edit</button>
+							<button className={styles.userListEdit}>View</button>
 						</Link>
-						<DeleteOutline className={styles.userListDelete} onClick={() => handleDelete(params.row._id)} />
 					</>
 				)
 			}
