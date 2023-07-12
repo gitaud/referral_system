@@ -8,6 +8,7 @@ const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordRese
 const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswordForm'));
 const UserList = lazy(() => import('./pages/Users/ListUsers/ListUsers'));
 const ViewUser = lazy(() => import('./pages/Users/ViewUser/ViewUser'));
+const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserForm'));
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 						<Route path="/" element={<ProtectedRoute />}>
 							<Route path="/users" element={ <UserList /> } />
 							<Route path="/user/:id" element={<ViewUser />} />
+							<Route path="/users/new" element={<CreateUserForm /> } />
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
