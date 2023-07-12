@@ -1,0 +1,46 @@
+.referralForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.formInput {
+  border: none;
+  min-width: 250px;
+  height: 30px;
+  margin-right: 15px;
+  border-bottom: 1px solid gray;
+}
+
+.formInput:focus {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.inputLabel {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.error {
+  color: red;
+  padding: 5px;
+}
+
+.submitButton {
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  background-color: rgb(113, 113, 219);
+  color: whitesmoke;
+  font-weight: 600;
+  min-width: 240px;
+}
