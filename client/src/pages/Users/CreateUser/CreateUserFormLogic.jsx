@@ -67,7 +67,7 @@ const CreateUserFormLogic = ({ defaultValues, user, onSubmit }) => {
 		}
 	}
 
-	return (<CreateUserFormView form={form} user={defaultValues} onSubmit={handleSubmit} />)
+	return (<CreateUserFormView form={form} onSubmit={handleSubmit} />)
 }
 
 export default CreateUserFormLogic;

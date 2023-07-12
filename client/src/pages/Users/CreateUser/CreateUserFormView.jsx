@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "../styles/UserForm.module.css";
 
-const CreateUserFormView = ( { form, onSubmit, error } ) => {
+const CreateUserFormView = ( { form, onSubmit } ) => {
 	const { formState, register, handleSubmit } = form;
 	const { errors, isSubmitting } = formState;
 
