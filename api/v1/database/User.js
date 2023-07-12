@@ -72,9 +72,17 @@ const updateUser = async (userId, changes) => {
 			if (user.referrals_made.indexOf(changes.referrals_made) === -1) {
 				user.referrals_made.push(changes.referrals_made);
 			}
+		} else if (changes.referred_by) {
+			if (user.referred_by !== null) {
+				throw {
+					status: 400,
+					message: "User has already been referred"
+				}
+			}
+			user.referred_by = changes.referred_by;
 		}
 		for (key in changes) {
-			if ( key !== "referrals_made") {
+			if ( key !== "referrals_made" && key !== "referred_by") {
 				user[key] = changes[key];
 			}
 		}
