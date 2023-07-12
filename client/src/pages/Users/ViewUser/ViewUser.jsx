@@ -1,17 +1,22 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { 
 	AccountBalanceWalletOutlined,
-	GroupsOutlined, 
+	AttachMoneyOutlined,
+	BorderColorOutlined,
+	GroupsOutlined,
+	Link, 
 	MailOutline, 
 	MilitaryTechOutlined,
-	PermIdentity
+	PermIdentity,
+	RequestPageOutlined
  } from "@mui/icons-material";
 import Swal from 'sweetalert2';
 import { useAuthContext } from '../../../context/AuthContext';
 import { getOneUser } from '../../../apiCalls/userApiCalls';
 import { getOneLevel } from '../../../apiCalls/levelApiCalls';
 import EditUserForm from '../EditUser/EditUserForm';
+import AddReferralForm from '../AddReferral/AddReferralForm';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ViewUser.module.css";
 
@@ -19,8 +24,13 @@ export default function User() {
 	const { user } = useAuthContext()
 	const [ usrData, setUsrData ] = useState(null);
 	const [ level, setLevel ] = useState(null);
+	const [ mode, setMode ] = useState("edit");
 	const usrId = useParams().id
 	useSetDocumentTitle(`View User - ${usrData?.name}`)
+
+	const changeMode = (selectedMode) => {
+		setMode(selectedMode);
+	}
 	
 	useLayoutEffect(() => {
 		const getUser = async () => {
@@ -47,23 +57,6 @@ export default function User() {
 		<div className={styles.user}>
 			<div className={styles.userTitleContainer}>
 				<h1 className={styles.userTitle}>{usrData.name} </h1>
-				<div className={styles.userButtons}>
-					<Link to={`/user/transactions/${usrData._id}`}>
-						<button className={styles.userAddButton}>
-							View User Transactions
-						</button>
-					</Link>
-					<Link to={`/user/transactions/add/${usrData._id}`}>
-						<button className={styles.userAddButton}>
-							Create User Transaction
-						</button>
-					</Link>
-					<Link to={`/user/referral/add/${usrData._id}`}>
-						<button className={styles.userAddButton}>
-							Add Referral
-						</button>
-					</Link>
-				</div>
 			</div>
 			<div className={styles.userContainer}>
 				<div className={styles.userShow}>
@@ -95,9 +88,32 @@ export default function User() {
 							<AccountBalanceWalletOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Commission Earned: Ksh {usrData.commissionDue}</span>
 						</div>
+						<span className={styles.userShowTitle}>Actions</span>
+						<div className={styles.userShowInfo + " " + styles.link } onClick={() => changeMode("edit")}>
+							<BorderColorOutlined className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}>Edit User</span>
+						</div>
+						<div className={styles.userShowInfo + " " + styles.link} onClick={
+							() => changeMode("referral")
+						}>
+							<Link className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}> Add Referral </span>
+						</div>
+						<div className={styles.userShowInfo + " " + styles.link} onClick={
+							() => changeMode("transaction")
+						}>
+							<AttachMoneyOutlined className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}>Add Transaction</span>
+						</div>
+						<div className={styles.userShowInfo + " " + styles.link} onClick={
+							() => changeMode("alltransaction")
+						}>
+							<RequestPageOutlined className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}>List User Transactions</span>
+						</div>
 					</div>
 				</div>
-				<EditUserForm usrData={usrData}/>
+				{mode === "edit" ? <EditUserForm usrData={usrData}/> : mode === "referral" ? <AddReferralForm usrData={usrData} /> : mode === "transaction" ? <>Transaction </> : <>New Transaction</> }
 			</div>
 		</div>
 	);

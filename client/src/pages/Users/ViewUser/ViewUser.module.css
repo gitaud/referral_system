@@ -1,6 +1,6 @@
 .user {
   flex: 4;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
 }
 
 .userTitleContainer {
@@ -102,6 +102,20 @@
 .userShowInfoTitle {
   margin-left: 10px;
 }
+
+.link {
+  text-decoration: none;
+  color: #444;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.link.active,
+.link:hover {
+  background-color: rgb(240, 240, 250);
+}
+
 
 @media screen and (max-width: 450px) {
   .userContainer {
