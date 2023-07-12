@@ -13,7 +13,7 @@ const EditUserFormSchema = yup.object().shape({
 	isAdmin: yup.boolean().required(),
 });
 
-const EditUserFormLogic = ({ defaultValues, onSubmit }) => {
+const EditUserFormLogic = ({ id, defaultValues, onSubmit }) => {
 	const navigate = useNavigate();
 	const form = useForm({
 		mode: "onSubmit",
@@ -29,13 +29,15 @@ const EditUserFormLogic = ({ defaultValues, onSubmit }) => {
 				didOpen: () => Swal.showLoading(),
 			})
 			await onSubmit(data);
-			Swal.fire({
-				icon: 'success',
-				title: 'User info saved',
-				showConfirmButton: true,
-				timer: 2000
-			})
-			navigate("/users");
+			setTimeout(() => {
+				Swal.fire({
+					icon: 'success',
+					title: 'User info saved',
+					showConfirmButton: true,
+					timer: 2000
+				})
+			}, 1500)
+			navigate(`/user/${id}`);
 		} catch(error) {
 			console.log(error);
 			Swal.fire({
