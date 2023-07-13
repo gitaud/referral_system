@@ -18,6 +18,7 @@ import { getOneUser } from '../../../apiCalls/userApiCalls';
 import { getOneLevel } from '../../../apiCalls/levelApiCalls';
 import EditUserForm from '../EditUser/EditUserForm';
 import AddReferralForm from '../AddReferral/AddReferralForm';
+import AddTransactionForm from '../AddTransaction/AddTransactionForm';
 import ListUserTransactions from '../ListUserTransactions/ListUserTransactions';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ViewUser.module.css";
@@ -42,7 +43,6 @@ export default function User() {
 				let level = await getOneLevel(user.authToken, usr.level);
 				setLevel(level.name);
 			} catch(error) {
-				console.log(error.cause);
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops',
@@ -98,7 +98,7 @@ export default function User() {
 							<span className={styles.userShowInfoTitle}>List Transactions</span>
 						</div>
 						<div className={styles.userShowInfo + " " + styles.link} onClick={
-							() => changeMode("transaction")
+							() => changeMode("newtransaction")
 						}>
 							<AttachMoneyOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Add Transaction</span>
@@ -115,10 +115,17 @@ export default function User() {
 						</div>
 					</div>
 				</div>
-				{mode === "edit" ? <EditUserForm usrData={usrData} /> : mode === "referral" ? <AddReferralForm usrData={usrData} /> : mode === "transaction" ? <>New Transaction</> : 
-					<DateFilterContextProvider>
-						<ListUserTransactions selectedUser={usrData} />
-					</DateFilterContextProvider>
+				{ 
+					mode === "edit" ? 
+						<EditUserForm usrData={usrData} /> 
+					: mode === "referral" ? 
+						<AddReferralForm usrData={usrData} /> 
+					: mode === "newtransaction" ? 
+						<AddTransactionForm usrData={usrData} /> 
+					: 
+						<DateFilterContextProvider>
+							<ListUserTransactions selectedUser={usrData} />
+						</DateFilterContextProvider>
 					}
 			</div>
 		</div>
