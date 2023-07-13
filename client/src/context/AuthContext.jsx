@@ -7,7 +7,10 @@ const defaultValues = {
   isLoggedIn: false,
   authToken: null,
   name: null,
-  error: null
+  isAdmin: null,
+  isSuperAdmin: null,
+  error: null,
+  id: null,
 }
 let initialValues;
 
@@ -50,11 +53,11 @@ const authReducer = (state, action) => {
     case INITIATING_LOGIN:
       return defaultValues;
     case LOGIN_SUCCESS:
-      let userData = { isLoggedIn: true, authToken: action.data.token, name: action.data.name, error: null};
+      let userData = { isLoggedIn: true, authToken: action.data.token, isAdmin: action.data.isAdmin, isSuperAdmin: action.data.isSuperAdmin, name: action.data.name, id: action.data._id, error: null};
       localStorage.setItem('USER_STATE', JSON.stringify(userData));
       return userData
     case LOGIN_FAILURE:
-      return { isLoggedIn: false, authToken: null, name: null, error: action.error }
+      return { isLoggedIn: false, isAdmin: null, isSuperAdmin: null, authToken: null, id: null, name: null, error: action.error }
     case LOGOUT:
       localStorage.setItem('USER_STATE', JSON.stringify(defaultValues))
       return defaultValues;
