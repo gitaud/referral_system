@@ -1,0 +1,42 @@
+.transactionList {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-left: 20px;
+  min-height: 800px;
+}
+
+.title {
+  font-size: 21px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.hint {
+  color: rgb(32, 50, 207);
+  margin-bottom: 15px;
+}
+
+.transactionListItem {
+  display: flex;
+  align-items: center;
+}
+
+.transactionListLink {
+  text-decoration: none;
+  color: #000000;
+}
+
+.transactionListEdit {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #3bb077;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
+}

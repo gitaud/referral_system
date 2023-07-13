@@ -9,6 +9,7 @@ const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswor
 const UserList = lazy(() => import('./pages/Users/ListUsers/ListUsers'));
 const ViewUser = lazy(() => import('./pages/Users/ViewUser/ViewUser'));
 const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserForm'));
+const TransactionList = lazy(() => import('./pages/Transactions/TransactionList/TransactionList'));
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 							<Route path="/users" element={ <UserList /> } />
 							<Route path="/user/:id" element={<ViewUser />} />
 							<Route path="/users/new" element={<CreateUserForm /> } />
+							<Route path="/transactions" element={<TransactionList />} />
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
