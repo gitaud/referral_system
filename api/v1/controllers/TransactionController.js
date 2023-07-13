@@ -39,8 +39,8 @@ const getOneTransaction = async (req, res) => {
 const getAllTransactions = async (req, res) => {
 	try {
 		const { date_gte, date_lte, customer_id } = req.query;
-		let transactions = await TransactionService.getAllTransactions({ date: {lte: date_gte, gte: date_lte}, customer_id });
-		if (!transactions) {
+		let transactions = await TransactionService.getAllTransactions({ date: {lte: date_lte, gte: date_gte}, customer_id });
+		if (transactions.length === 0) {
 			throw {
 				status: 500,
 				message: "Could not find transactions"
