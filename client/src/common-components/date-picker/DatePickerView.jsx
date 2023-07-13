@@ -20,7 +20,7 @@ const DatePickerView = () => {
 			<div className={styles.dateField}>
 				<DatePickerComponent
 					label={"Start Date"} 
-					value={dateGte} 
+					value={dateGte}
 					handleChange={(value) => setDateGte(value)} 
 				/>
 			</div>
@@ -29,7 +29,6 @@ const DatePickerView = () => {
 					label={"End Date"}
 					value={dateLte} 
 					handleChange={(value) => setDateLte(value)}
-					disableFuture={true}
 				/>
 			</div>
 			<button className={styles.submitButton} onClick={handleSubmit}>Set Date Filter</button>
