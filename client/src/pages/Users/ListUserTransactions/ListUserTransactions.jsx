@@ -6,10 +6,12 @@ import { useAuthContext } from '../../../context/AuthContext';
 import DatePickerView from '../../../common-components/date-picker/DatePickerView';
 import { useDateFilterContext } from '../../../context/DateFilterContext';
 import { getAllTransactions } from '../../../apiCalls/transactionApiCalls';
+import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ListUserTransactions.module.css";
 
 
-export default function OrderList({ selectedUser }) {
+export default function TransactionList({ selectedUser }) {
+	useSetDocumentTitle(`Transaction History - ${selectedUser.name}`)
 	const { user } = useAuthContext();
 	const { dates } = useDateFilterContext();
 	const [transactions, setTransactions] = useState([]);
