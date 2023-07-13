@@ -2,7 +2,7 @@ import { userRequest } from './baseApiCall';
 
 export const createTransaction = async (token, data) => {
 	try {
-		const response = await userRequest(token).post("/transaction", data);
+		const response = await userRequest(token).post("/transactions/", data);
 		return response.data;
 	} catch(error) {
 		throw new Error("Could not create transaction", { cause: error });
