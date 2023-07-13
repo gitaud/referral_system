@@ -13,10 +13,12 @@ import {
  } from "@mui/icons-material";
 import Swal from 'sweetalert2';
 import { useAuthContext } from '../../../context/AuthContext';
+import { DateFilterContextProvider } from '../../../context/DateFilterContext';
 import { getOneUser } from '../../../apiCalls/userApiCalls';
 import { getOneLevel } from '../../../apiCalls/levelApiCalls';
 import EditUserForm from '../EditUser/EditUserForm';
 import AddReferralForm from '../AddReferral/AddReferralForm';
+import ListUserTransactions from '../ListUserTransactions/ListUserTransactions';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ViewUser.module.css";
 
@@ -24,7 +26,7 @@ export default function User() {
 	const { user } = useAuthContext()
 	const [ usrData, setUsrData ] = useState(null);
 	const [ level, setLevel ] = useState(null);
-	const [ mode, setMode ] = useState("edit");
+	const [ mode, setMode ] = useState("alltransactions");
 	const usrId = useParams().id
 	useSetDocumentTitle(`View User - ${usrData?.name}`)
 
@@ -89,6 +91,18 @@ export default function User() {
 							<span className={styles.userShowInfoTitle}>Commission Earned: Ksh {usrData.commissionDue}</span>
 						</div>
 						<span className={styles.userShowTitle}>Actions</span>
+						<div className={styles.userShowInfo + " " + styles.link} onClick={
+							() => changeMode("alltransactions")
+						}>
+							<RequestPageOutlined className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}>List Transactions</span>
+						</div>
+						<div className={styles.userShowInfo + " " + styles.link} onClick={
+							() => changeMode("transaction")
+						}>
+							<AttachMoneyOutlined className={styles.userShowIcon} />
+							<span className={styles.userShowInfoTitle}>Add Transaction</span>
+						</div>
 						<div className={styles.userShowInfo + " " + styles.link } onClick={() => changeMode("edit")}>
 							<BorderColorOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Edit User</span>
@@ -99,21 +113,13 @@ export default function User() {
 							<Link className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}> Add Referral </span>
 						</div>
-						<div className={styles.userShowInfo + " " + styles.link} onClick={
-							() => changeMode("transaction")
-						}>
-							<AttachMoneyOutlined className={styles.userShowIcon} />
-							<span className={styles.userShowInfoTitle}>Add Transaction</span>
-						</div>
-						<div className={styles.userShowInfo + " " + styles.link} onClick={
-							() => changeMode("alltransaction")
-						}>
-							<RequestPageOutlined className={styles.userShowIcon} />
-							<span className={styles.userShowInfoTitle}>List User Transactions</span>
-						</div>
 					</div>
 				</div>
-				{mode === "edit" ? <EditUserForm usrData={usrData}/> : mode === "referral" ? <AddReferralForm usrData={usrData} /> : mode === "transaction" ? <>Transaction </> : <>New Transaction</> }
+				{mode === "edit" ? <EditUserForm usrData={usrData} /> : mode === "referral" ? <AddReferralForm usrData={usrData} /> : mode === "transaction" ? <>New Transaction</> : 
+					<DateFilterContextProvider>
+						<ListUserTransactions selectedUser={usrData} />
+					</DateFilterContextProvider>
+					}
 			</div>
 		</div>
 	);
