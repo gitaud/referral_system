@@ -34,7 +34,17 @@ const getOneTransaction = async (transactionId) => {
 const getAllTransactions = async (filterParams) => {
 	try {
 		let transactions;
-		transactions = await Transaction.find({ createdAt: { $gte: new Date(filterParams.date.gte), $lte: new Date(filterParams.date.lte)}});
+		const dateFilter = {
+			gte: new Date(filterParams.date.gte),
+			lte: new Date(filterParams.date.lte)
+		}
+		dateFilter.lte.setHours(23, 59, 59);
+		transactions = await Transaction.find({ 
+			createdAt: { 
+				$gte: dateFilter.gte, 
+				$lte: dateFilter.lte
+			}
+		});
 		if (filterParams.customer_id) {
 			transactions = transactions.filter(transaction => transaction.customer_id == filterParams.customer_id)
 		}
