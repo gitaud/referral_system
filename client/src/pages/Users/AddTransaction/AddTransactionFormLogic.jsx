@@ -27,7 +27,7 @@ const AddTransactionFormLogic = ({ usrData, defaultValues, onSubmit }) => {
 			setTimeout(() => {
 				Swal.fire({
 					icon: 'success',
-					title: 'User info saved',
+					title: 'Transaction saved',
 					showConfirmButton: true,
 					timer: 2000
 				}).then(result => {
