@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+  AttachMoneyOutlined,
   GroupsOutlined,
   PermIdentity,
   Storefront,
@@ -29,7 +30,13 @@ export default function Sidebar() {
             <Link to="/transactions" className={styles.link}>
               <li className={styles.sidebarListItem}>
                 <Storefront className={styles.sidebarIcon} />
-                List All Transactions
+                List Transactions
+              </li>
+            </Link>
+            <Link to="/transactions/new" className={styles.link}>
+              <li className={styles.sidebarListItem}>
+                <AttachMoneyOutlined className={styles.sidebarIcon} />
+                New Transaction
               </li>
             </Link>
           </ul>

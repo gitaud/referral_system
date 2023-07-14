@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+  AttachMoneyOutlined,
   GroupsOutlined,
   PermIdentity,
   PowerSettingsNew,
@@ -33,8 +34,13 @@ export default function Topbar() {
             </Link>
           </div>
           <div className={styles.nav}>
-            <Link to="/orders" className={styles.link}>
+            <Link to="/transactions" className={styles.link}>
               <Storefront />
+            </Link>
+          </div>
+          <div className={styles.nav}>
+            <Link to="/transactions/new" className={styles.link}>
+              <AttachMoneyOutlined />
             </Link>
           </div>
           <Link to="/" className={styles.link}>
