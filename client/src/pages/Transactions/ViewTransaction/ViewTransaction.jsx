@@ -56,6 +56,10 @@ export default function ViewTransaction() {
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<AccountBalanceWalletOutlined className={styles.transactionShowIcon} />
+							<span className={styles.transactionShowInfoTitle}>Amount: Ksh {transaction.amount}</span>
+						</div>
+						<div className={styles.transactionShowInfo}>
+							<AccountBalanceWalletOutlined className={styles.transactionShowIcon} />
 							<span className={styles.transactionShowInfoTitle}>Commission: Ksh {transaction.commission}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
