@@ -43,11 +43,11 @@ const searchUser = async (searchParams) => {
 	}
 }
 
-const getAllUsers = async (filterParams, limit=false) => {
+const getAllUsers = async (filterParams, limit) => {
 	try {
 		let users;
 		if (limit) {
-			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').limit(15);
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').limit(5);
 		} else {
 			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt');
 		}
@@ -64,7 +64,7 @@ const getAllUsers = async (filterParams, limit=false) => {
 	}
 }
 
-const getUserStats = async (date) => {
+const getUserStats = async (lastYear) => {
 	try {
 		const data = await User.aggregate([
 			{ $match: { createdAt: { $gte: lastYear } } },
