@@ -4,11 +4,11 @@ const TokenHelper = require("../helpers/TokenHelper");
 
 router.get("/search", TokenHelper.verifyAdmin, UserController.searchUser);
 
+router.get("/stats", TokenHelper.verifyAdmin, UserController.getUserStats);
+
 router.get("/:id", TokenHelper.verifyAuthorized, UserController.getOneUser);
 
 router.get("/", TokenHelper.verifyAdmin, UserController.getAllUsers);
-
-router.get("/stats", TokenHelper.verifyAdmin, UserController.getUserStats);
 
 router.post("/", TokenHelper.verifyAdmin, UserController.createNewUser);
 

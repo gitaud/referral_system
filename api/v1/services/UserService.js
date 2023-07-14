@@ -66,7 +66,7 @@ const getAllUsers = async (filterParams) => {
 		} else if (filterParams.referred_by) {
 			users = await User.getAllUsers({ referred_by: filterParams.referred_by }, limit);
 		} else {
-			users = await User.getAllUsers();
+			users = await User.getAllUsers(null, limit);
 		}
 		if (filterParams.page) {
 			let indx = Number(filterParams.page);

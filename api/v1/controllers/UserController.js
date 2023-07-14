@@ -59,9 +59,9 @@ const getUserStats = async (req, res) => {
 }
 
 const getAllUsers = async (req, res) => {
-	const { level, referred_by, length, page, sort, new } = req.query;
+	const { level, referred_by, length, page, sort, limit } = req.query;
 	try {
-		const users = await UserService.getAllUsers({level, referred_by, length, page, sort, limit: new});
+		const users = await UserService.getAllUsers({level, referred_by, length, page, sort, limit });
 		return res.json(users)
 	} catch(error) {
 		return res
