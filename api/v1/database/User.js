@@ -43,9 +43,14 @@ const searchUser = async (searchParams) => {
 	}
 }
 
-const getAllUsers = async (filterParams) => {
+const getAllUsers = async (filterParams, limit=false) => {
 	try {
-		let users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt');
+		let users;
+		if (limit) {
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').limit(15);
+		} else {
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt');
+		}
 		if (users.length > 0) {
 			return users;
 		} else {
@@ -56,6 +61,28 @@ const getAllUsers = async (filterParams) => {
 		}
 	} catch(error) {
 		throw { status: error?.status || 500, message: error?.message || error}
+	}
+}
+
+const getUserStats = async (date) => {
+	try {
+		const data = await User.aggregate([
+			{ $match: { createdAt: { $gte: lastYear } } },
+			{
+				$project: {
+					month: { $month: "$createdAt" },
+				},
+			},
+			{
+				$group: {
+					_id: "$month",
+					total: { $sum: 1 }
+				}
+			}
+		]);
+		return data;
+	} catch(error) {
+		throw { status: error?.status || 500, message: error?.message || error }
 	}
 }
 
@@ -107,6 +134,7 @@ module.exports = {
 	getOneUser,
 	searchUser,
 	getAllUsers,
+	getUserStats,
 	updateUser,
 	deleteUser,
 }

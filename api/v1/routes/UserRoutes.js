@@ -8,6 +8,8 @@ router.get("/:id", TokenHelper.verifyAuthorized, UserController.getOneUser);
 
 router.get("/", TokenHelper.verifyAdmin, UserController.getAllUsers);
 
+router.get("/stats", TokenHelper.verifyAdmin, UserController.getUserStats);
+
 router.post("/", TokenHelper.verifyAdmin, UserController.createNewUser);
 
 router.patch("/:id", TokenHelper.verifyAuthorized, UserController.updateUser);

@@ -59,11 +59,12 @@ const searchUser = async (searchParams) => {
 
 const getAllUsers = async (filterParams) => {
 	try {
+		let limit = filterParams.limit;
 		let users;
 		if (filterParams.level) {
-			users = await User.getAllUsers({ level: filterParams.level });
+			users = await User.getAllUsers({ level: filterParams.level }, limit);
 		} else if (filterParams.referred_by) {
-			users = await User.getAllUsers({ referred_by: filterParams.referred_by });
+			users = await User.getAllUsers({ referred_by: filterParams.referred_by }, limit);
 		} else {
 			users = await User.getAllUsers();
 		}
@@ -100,6 +101,17 @@ const getAllUsers = async (filterParams) => {
 		return users;
 	} catch (error) {
 		throw error
+	}
+}
+
+const getUserStats = async () => {
+	try {
+		const date = new Date();
+		const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+		const stats = await User.getUserStats(lastYear);
+		return stats;
+	} catch(error) {
+		throw error;
 	}
 }
 
@@ -189,6 +201,7 @@ module.exports = {
 	getOneUser,
 	searchUser,
 	getAllUsers,
+	getUserStats,
 	updateUserAddReferral,
 	updateUserCommissionDue,
 	updateUserDetails,

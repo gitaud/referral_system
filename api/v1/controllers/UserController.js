@@ -47,10 +47,21 @@ const searchUser = async (req, res) => {
 	}
 }
 
-const getAllUsers = async (req, res) => {
-	const { level, referred_by, length, page, sort } = req.query;
+const getUserStats = async (req, res) => {
 	try {
-		const users = await UserService.getAllUsers({level, referred_by, length, page, sort});
+		const stats = await UserService.getUserStats();
+		return res.json(stats);
+	} catch(error) {
+		return res
+			.status(error?.status || 500)
+			.json(error?.message || error)
+	}
+}
+
+const getAllUsers = async (req, res) => {
+	const { level, referred_by, length, page, sort, new } = req.query;
+	try {
+		const users = await UserService.getAllUsers({level, referred_by, length, page, sort, limit: new});
 		return res.json(users)
 	} catch(error) {
 		return res
@@ -146,6 +157,7 @@ module.exports = {
 	getOneUser,
 	searchUser,
 	getAllUsers,
+	getUserStats,
 	updateUser,
 	updateUserAddReferral,
 	updateUserIncreaseLevel,
