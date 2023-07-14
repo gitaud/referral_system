@@ -54,6 +54,15 @@ export const addReferral = async(token, referrerId, referredId) => {
 	}
 }
 
+export const getUserStats = async (token) => {
+	try {
+		const response = await userRequest(token).get("/users/stats");
+		return response.data;
+	} catch(error) {
+		throw new Error("Cannot get user stats", { cause: error });
+	}
+}
+
 export const updateUserIncreaseLevel = async(token, id) => {
 	try {
 		const response = await userRequest(token).patch(`/users/level/add/${id}`)
