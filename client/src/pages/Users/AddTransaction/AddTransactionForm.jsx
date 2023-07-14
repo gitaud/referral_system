@@ -17,7 +17,6 @@ const AddTransactionForm = ({ usrData }) => {
 			customer_level_id: usrData.level,
 			recorded_by: user.id,
 		}
-		console.log(submissionData);
 		return createTransaction(user.authToken, submissionData);
 	}
 	return (<AddTransactionFormLogic usrData={usrData} defaultValues={defaultValues} onSubmit={handleSubmit} />)
