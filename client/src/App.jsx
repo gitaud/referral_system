@@ -6,6 +6,7 @@ const ProtectedRoute = lazy(() => import('./common-components/protected-routes/P
 const Login = lazy(() => import( './pages/Auth/Login/LoginForm'));
 const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordReset/RequestPasswordResetForm'));
 const ResetPassword = lazy(() => import('./pages/Auth/ResetPassword/ResetPasswordForm'));
+const Home = lazy(() => import('./pages/Home/Home/Home'));
 const UserList = lazy(() => import('./pages/Users/ListUsers/ListUsers'));
 const ViewUser = lazy(() => import('./pages/Users/ViewUser/ViewUser'));
 const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserForm'));
@@ -21,6 +22,7 @@ function App() {
 				<Suspense fallback={<div><p>Loading</p></div>}>
 					<Routes>
 						<Route path="/" element={<ProtectedRoute />}>
+							<Route path="/" element={<Home /> } />
 							<Route path="/users" element={ <UserList /> } />
 							<Route path="/user/:id" element={<ViewUser />} />
 							<Route path="/users/new" element={<CreateUserForm /> } />

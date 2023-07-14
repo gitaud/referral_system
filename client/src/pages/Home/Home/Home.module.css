@@ -1,0 +1,17 @@
+.home {
+  flex: 4;
+}
+
+.homeWidgets {
+  display: flex;
+  margin: 20px;
+}
+
+@media screen and (max-width: 450px){
+  .home {
+    flex-direction: column;
+  }
+  .homeWidgets {
+    flex-direction: column;
+  }
+}
