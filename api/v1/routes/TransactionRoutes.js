@@ -8,4 +8,6 @@ router.get("/:id", TokenHelper.verifyAdmin, TransactionController.getOneTransact
 
 router.get("/", TokenHelper.verifyAdmin, TransactionController.getAllTransactions);
 
+router.get("/income", TokenHelper.verifyAdmin, TransactionController.getTransactionIncome);
+
 module.exports = router;

@@ -63,9 +63,47 @@ const getAllTransactions = async (filterParams) => {
 	}
 }
 
+const getTransactionIncome = async (monthGte) => {
+	try {
+		const transactions = await Transaction.aggregate([
+			{
+				$match: {
+					createdAt: {
+						$gte: monthGte
+					}
+				}
+			},
+			{
+				$project: {
+					month: { $month: "$createdAt" },
+					sales: "$amount"
+				}
+			},
+			{
+				$group: {
+					_id: "$month",
+					total: { $sum: "$sales" }
+				}
+			}
+		])
+		if (!transactions) {
+			throw {
+				status: 400,
+				message: 'No transaction data found'
+			}
+		}
+	} catch(error) {
+		throw {
+			status: error?.status || 500,
+			message: error?.message || error
+		}
+	}
+}
+
 
 module.exports = {
 	createTransaction,
 	getOneTransaction,
 	getAllTransactions,
+	getTransactionIncome
 }

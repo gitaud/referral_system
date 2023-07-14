@@ -54,9 +54,21 @@ const getAllTransactions = async (filterParams) => {
 	}
 }
 
+const getTransactionIncome = async () => {
+	try {
+		const date = new Date();
+		const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
+		const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
+		const transactions = await Transaction.getTransactionIncome(previousMonth);
+		return transactions;
+	} catch(error) {
+		throw error;
+	}
+}
 
 module.exports = {
 	createTransaction,
 	getOneTransaction,
 	getAllTransactions,
+	getTransactionIncome
 }
