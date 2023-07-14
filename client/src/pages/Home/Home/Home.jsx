@@ -53,9 +53,7 @@ export default function Home() {
 			}
 		}
 		getStats();
-	}, [MONTHS, user])
-
-	console.log(userStats);
+	}, [MONTHS, user]);
 
 	return (
 		<div className={styles.home}>
