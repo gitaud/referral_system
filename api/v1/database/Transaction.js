@@ -92,6 +92,7 @@ const getTransactionIncome = async (monthGte) => {
 				message: 'No transaction data found'
 			}
 		}
+		return transactions;
 	} catch(error) {
 		throw {
 			status: error?.status || 500,
