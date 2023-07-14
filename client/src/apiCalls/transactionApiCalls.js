@@ -26,3 +26,12 @@ export const getAllTransactions = async (token, filterParams) => {
 		throw new Error("Could not fetch transactions", { cause: error })
 	}
 }
+
+export const getTransactionIncome = async (token) => {
+	try {
+		const response = await userRequest(token).get("/transactions/income");
+		return response.data;
+	} catch(error) {
+		throw new Error("Could not fetch transaction income info", { cause: error });
+	}
+}
