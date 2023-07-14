@@ -37,7 +37,9 @@ const createTransaction = async (data) => {
 const getOneTransaction = async (transactionId) => {
 	try {
 		let transaction = await Transaction.getOneTransaction(transactionId);
-		return transaction;
+		const user = await UserService.getOneUser(transaction.customer_id);
+		const level = await LevelService.getOneLevel(user.level);
+		return { ...transaction._doc, name: user.name, level: level.name };
 	} catch (error) {
 		throw error;
 	}

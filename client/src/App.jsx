@@ -11,6 +11,7 @@ const ViewUser = lazy(() => import('./pages/Users/ViewUser/ViewUser'));
 const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserForm'));
 const TransactionList = lazy(() => import('./pages/Transactions/TransactionList/TransactionList'));
 const CreateTransactionForm = lazy(() => import('./pages/Transactions/CreateTransaction/CreateTransactionForm'));
+const ViewTransaction = lazy(() => import('./pages/Transactions/ViewTransaction/ViewTransaction'));
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
 							<Route path="/users/new" element={<CreateUserForm /> } />
 							<Route path="/transactions" element={<TransactionList />} />
 							<Route path="/transactions/new" element={<CreateTransactionForm />} />
+							<Route path="/transaction/:id" element={<ViewTransaction />} />
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
