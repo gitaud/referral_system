@@ -2,6 +2,7 @@ import React, { lazy, Suspense  } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { AuthContextProvider} from './context/AuthContext';
+import { ChaoticOrbit } from '@uiball/loaders';
 const ProtectedRoute = lazy(() => import('./common-components/protected-routes/ProtectedRoute'));
 const Login = lazy(() => import( './pages/Auth/Login/LoginForm'));
 const RequestPasswordReset = lazy(() => import('./pages/Auth/RequestPasswordReset/RequestPasswordResetForm'));
@@ -19,7 +20,18 @@ function App() {
 	return (
 		<AuthContextProvider>
 			<Router>
-				<Suspense fallback={<div><p>Loading</p></div>}>
+				<Suspense fallback={
+					<div 
+						style={
+							{ 
+								display: "flex", 
+								justifyContent: "center", 
+								alignItems: "center", 
+								minHeight: "100vh", 
+								minWidth: "100%" 
+							}}>
+						<ChaoticOrbit size={80} lineWeight={5} speed={2} color={"black"} />
+					</div>}>
 					<Routes>
 						<Route path="/" element={<ProtectedRoute />}>
 							<Route path="/" element={<Home /> } />
