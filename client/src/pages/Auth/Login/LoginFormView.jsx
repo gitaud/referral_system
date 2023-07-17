@@ -22,7 +22,7 @@ const LoginFormView = ({ form, onSubmit, error }) => {
 				{errors && <p className={styles.error}>{errors?.password?.message} </p>}
 				<button disabled={isSubmitting} className={styles.button} type="submit" >Login</button>
 				{ error && <p className={styles.error}>{error} </p>}
-				<Link to="/reset/password" className={styles.link}>Reset Password</Link>
+				<Link to="/reset/password" className={styles.link}>Forgot Password</Link>
 			</form>
 		</div>
 	)
