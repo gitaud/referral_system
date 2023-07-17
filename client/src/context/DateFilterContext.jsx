@@ -2,9 +2,11 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 export const DateFilterContext = createContext(null);
 
+const date_today = new Date();
+
 const initialValues = {
-	date_lte: null,
-	date_gte: null,
+	date_lte: new Date(date_today.setDate(date_today.getDate() - 7)).toDateString(),
+	date_gte: date_today.toDateString(),
 }
 
 // Action Types
