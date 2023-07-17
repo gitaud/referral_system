@@ -16,7 +16,7 @@ const SearchUserView = ({ form, onSubmit }) => {
 				<select className={styles.formInput} id="param" {...register("param")} name="param" defaultValue="email">
 					<option value="name">Name</option>
 					<option value="email">Email</option>
-					<option value="phone">Phone</option>
+					<option value="phone">Phone Number</option>
 				</select>
 				{ errors && <p className={styles.error}>{errors?.param?.message } </p>}
 				<button className={styles.submitButton} type="submit" disabled={isSubmitting}>Search</button>
