@@ -26,7 +26,6 @@ import styles from "./ViewUser.module.css";
 export default function User() {
 	const { user } = useAuthContext()
 	const [ usrData, setUsrData ] = useState(null);
-	const [ level, setLevel ] = useState(null);
 	const [ mode, setMode ] = useState("alltransactions");
 	const usrId = useParams().id
 	useSetDocumentTitle(`View User - ${usrData?.name}`)
@@ -40,8 +39,6 @@ export default function User() {
 			try {
 				let usr = await getOneUser(user.authToken, usrId);
 				setUsrData(usr);
-				let level = await getOneLevel(user.authToken, usr.level);
-				setLevel(level.name);
 			} catch(error) {
 				Swal.fire({
 					icon: 'error',
@@ -80,7 +77,7 @@ export default function User() {
 						<span className={styles.userShowTitle}>Level and Commission</span>
 						<div className={styles.userShowInfo}>
 							<MilitaryTechOutlined className={styles.userShowIcon} />
-							<span className={styles.userShowInfoTitle}>Level: {level || 'Not Subscribed'}</span>
+							<span className={styles.userShowInfoTitle}>Level: {usrData.level.name || 'Not Subscribed'}</span>
 						</div>
 						<div className={styles.userShowInfo}>
 							<GroupsOutlined className={styles.userShowIcon} />

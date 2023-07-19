@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  level: { type: mongoose.ObjectId, default: null },
+  level: { type: mongoose.Schema.Types.ObjectId, ref: 'Level', default: null },
   referred_by: { type: mongoose.ObjectId, default: null, },
   referrals_made: {type: Array,  data: mongoose.ObjectId, default: null },
   email: { type: String, required: true, unique: true, default: null },

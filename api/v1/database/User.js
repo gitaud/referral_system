@@ -15,7 +15,7 @@ const createNewUser = async (data) => {
 
 const getOneUser = async (userId) => {
 	try {
-		let user = await User.findById(userId);
+		let user = await User.findById(userId).populate('level', 'name _id');
 		if (!user) {
 			throw {
 				status: 400,
@@ -30,7 +30,7 @@ const getOneUser = async (userId) => {
 
 const searchUser = async (searchParams) => {
 	try {
-		const user = await User.findOne(searchParams).select('id name level nextLevelRank email phone referred_by password referrals_made isAdmin isSuperAdmin');
+		const user = await User.findOne(searchParams).select('id name level nextLevelRank email phone referred_by password referrals_made isAdmin isSuperAdmin').populate('level', 'name _id').exec();
 		if (!user) {
 			throw {
 				status: 400,
@@ -47,9 +47,9 @@ const getAllUsers = async (filterParams, limit) => {
 	try {
 		let users;
 		if (limit) {
-			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').limit(5);
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').populate('level', 'name _id').limit(5).exec();
 		} else {
-			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt');
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').populate('level', 'name _id').exec();
 		}
 		if (users.length > 0) {
 			return users;
@@ -114,8 +114,8 @@ const updateUser = async (userId, changes) => {
 			}
 		}
 		await user.save();
-		const { password, isSuperAdmin, ...otherData } = user._doc;
-		return otherData;
+		let updatedUser = await getOneUser(user._id);
+		return updatedUser;
 	} catch(error) {
 		throw { status: error?.status || 500, message: error?.message || error }
 	}
