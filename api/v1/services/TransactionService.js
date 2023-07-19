@@ -5,23 +5,24 @@ const RoundOffHelper = require("../helpers/RoundOffHelper.js");
 
 const createTransaction = async (data) => {
 	try {
+		let level, commission, transaction, userUpdated;
 		let newTransaction = {
-			customer_id: data.customer_id,
 			amount: data.amount,
-			recorded_by: data.recorded_by
+			recorded_by: data.recorded_by,
+			items: data.items,
 		}
-		const level = await LevelService.getOneLevel(data.customer_level_id);
-		if (!level) {
-			throw {
-				status: 400,
-				message: `No level with the id ${data.customer_level_id} found`
+		if (data.customer_level_id) {
+			newTransaction.customer_id = data.customer_id;
+			level = await LevelService.getOneLevel(data.customer_level_id);
+			commission = Number(data.amount) * (level.savings / 100);
+			newTransaction.commission = RoundOffHelper.roundToZero(commission);
+		}
+		transaction = await Transaction.createTransaction(newTransaction);
+		
+		if (transaction) {
+			if (transaction.customer_id) {
+				userUpdated = await UserService.updateUserCommissionDue(transaction.customer_id, transaction.commission, false);
 			}
-		}
-		let commission = Number(data.amount) * (level.savings / 100);
-		newTransaction.commission = RoundOffHelper.roundToZero(commission);
-		let transaction = await Transaction.createTransaction(newTransaction);
-		let userUpdated = await UserService.updateUserCommissionDue(transaction.customer_id, transaction.commission, false);
-		if (transaction && userUpdated) {
 			return transaction;
 		} else {
 			throw {
@@ -37,9 +38,7 @@ const createTransaction = async (data) => {
 const getOneTransaction = async (transactionId) => {
 	try {
 		let transaction = await Transaction.getOneTransaction(transactionId);
-		const user = await UserService.getOneUser(transaction.customer_id);
-		const level = await LevelService.getOneLevel(user.level);
-		return { ...transaction._doc, name: user.name, level: level.name };
+		return { transaction };
 	} catch (error) {
 		throw error;
 	}

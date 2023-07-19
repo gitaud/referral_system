@@ -15,13 +15,21 @@ const createTransaction = async (data) => {
 
 const getOneTransaction = async (transactionId) => {
 	try {
-		const transaction = await Transaction.findById(transactionId);
+		let transaction = await Transaction.findById(transactionId)
+			.populate({
+				path: 'customer_id', 
+				select: 'name'
+			}).exec();
 		if (!transaction) {
 			throw {
 				status: 400,
 				message: `No transaction with the id ${transactionId} found`
 			}
 		}
+		await transaction.populate({
+			path: 'recorded_by',
+			select: 'name'
+		}).exec();
 		return transaction;
 	} catch(error) {
 		throw {
@@ -39,16 +47,25 @@ const getAllTransactions = async (filterParams) => {
 			lte: new Date(filterParams.date.lte)
 		}
 		dateFilter.lte.setHours(23, 59, 59);
+		
+		
 		transactions = await Transaction.find({ 
 			createdAt: { 
 				$gte: dateFilter.gte, 
 				$lte: dateFilter.lte
 			}
-		});
+		}).select('customer_id amount recorded_by createdAt').populate({
+				path: 'customer_id',
+				select: 'name'
+			}).exec();
+
+
 		if (filterParams.customer_id) {
 			transactions = transactions.filter(transaction => transaction.customer_id == filterParams.customer_id)
 		}
-		if (!transactions) {
+
+
+		if (!transactions.length) {
 			throw {
 				status: 400,
 				messge: "No transactions found"

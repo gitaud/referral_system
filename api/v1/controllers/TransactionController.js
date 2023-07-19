@@ -2,14 +2,14 @@ const TransactionService = require("../services/TransactionService");
 
 const createTransaction = async (req, res) => {
 	try {
-		let {recorded_by, amount, customer_id, customer_level_id } = req.body;
-		if (!recorded_by || !amount || !customer_id || !customer_level_id) {
+		let {recorded_by, amount, customer_id, customer_level_id, items } = req.body;
+		if (!recorded_by || !amount || !items ) {
 			throw {
 				status: 400,
 				message: 'Ensure all fields are filled'
 			}
 		}
-		const transaction = await TransactionService.createTransaction({recorded_by, amount, customer_id, customer_level_id });
+		const transaction = await TransactionService.createTransaction({recorded_by, amount, customer_id, customer_level_id, items });
 		return res.json(transaction);
 	} catch(error) {
 		return res
