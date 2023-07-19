@@ -26,16 +26,7 @@ export default function TransactionList({ selectedUser }) {
 				})
 				const filterParams = `date_gte=${dates.date_gte}&date_lte=${dates.date_lte}&customer_id=${selectedUser._id}`
 				const transactionsFound = await getAllTransactions(user.authToken, filterParams);
-				Swal.fire({
-					icon: 'success',
-					title: 'Success',
-					text: 'Transactions Found',
-					showConfirmButton: true,
-				}).then(result => {
-					if (result.isConfirmed) {
-						setTransactions(transactionsFound);
-					}
-				})
+				setTransactions(transactionsFound);
 			} catch(error) {
 				console.log(error.cause);
 				Swal.fire({
