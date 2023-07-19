@@ -8,6 +8,7 @@ const AuthRouter = require("./v1/routes/AuthRoutes");
 const LevelRouter = require("./v1/routes/LevelRoutes");
 const TransactionRouter = require("./v1/routes/TransactionRoutes");
 const UserRouter = require("./v1/routes/UserRoutes");
+const MenuRouter = require("./v1/routes/MenuRoutes");
 
 // Load .env
 dotenv.config();
@@ -23,6 +24,7 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/levels", LevelRouter);
 app.use("/api/v1/transactions", TransactionRouter);
 app.use("/api/v1/users", UserRouter);
+app.use("/api/v1/menu", MenuRouter);
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI, { 
