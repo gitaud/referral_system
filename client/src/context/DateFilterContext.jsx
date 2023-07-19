@@ -5,8 +5,8 @@ export const DateFilterContext = createContext(null);
 const date_today = new Date();
 
 const initialValues = {
-	date_lte: new Date(date_today.setDate(date_today.getDate() - 7)).toDateString(),
-	date_gte: date_today.toDateString(),
+	date_lte: date_today.toDateString(),
+	date_gte: new Date(date_today.setDate(date_today.getDate() - 7)).toDateString(),
 }
 
 // Action Types
