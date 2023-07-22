@@ -2,9 +2,9 @@ const router = require("express").Router();
 const MenuController = require("../controllers/MenuController");
 const TokenHelper = require("../helpers/TokenHelper");
 
-router.post("/categories", TokenHelper.verifyAdmin, MenuController.createNewCategory);
+router.post("/categories", TokenHelper.verifyAdmin, MenuController.createCategory);
 
-router.post("/items", TokenHelper.verifyAdmin, MenuController.createNewMenuItem);
+router.post("/items", TokenHelper.verifyAdmin, MenuController.createMenuItem);
 
 router.get("/categories", TokenHelper.verifyAdmin, MenuController.getAllMenuCategories)
 
@@ -16,6 +16,6 @@ router.patch("/items/:id", TokenHelper.verifyAdmin, MenuController.updateMenuIte
 
 router.delete("/categories/:id", TokenHelper.verifySuperAdmin, MenuController.deleteMenuCategory);
 
-router.delete("/items/:id", TokenHelper.verifySuperAdmin, MenuController.deleteMenuCategory);
+router.delete("/items/:id", TokenHelper.verifySuperAdmin, MenuController.deleteMenuItem);
 
 module.exports = router;

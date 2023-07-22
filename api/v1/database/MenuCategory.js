@@ -34,12 +34,6 @@ const getOneMenuCategory = async (id) => {
 const getAllMenuCategories = async (filterParams) => {
 	try {
 		const categories = await Category.find(filterParams).populate('items').exec();
-		if (!categories.length) {
-			throw {
-				status: 400,
-				message: "No categories found"
-			}
-		}
 		return categories;
 	} catch (error) {
 		throw {

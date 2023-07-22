@@ -13,7 +13,7 @@ const createNewCategory = async (name) => {
 const createNewMenuItem = async (categoryId, itemData) => {
 	try {
 		const item = await MenuItem.createMenuItem({name: itemData.name, price: itemData.price, category: categoryId });
-		let category = await MenuCategory.updateMenuCategoryAddItems(categoryId, item._id);
+		let category = await MenuCategory.updateMenuCategoryAddItems(categoryId, [item._id]);
 		return category;
 	} catch(error) {
 		throw error;
@@ -56,10 +56,11 @@ const updateMenuItem = async (itemId, data) => {
 	}
 }
 
-const deleteMenuItem = async (categoryId, itemId) => {
+const deleteMenuItem = async (itemId) => {
 	try {
+		const item = await MenuItem.getOneMenuItem(itemId);
 		let itemDeleted = await MenuItem.deleteOneMenuItem(itemId);
-		let categoryDeleted = await MenuCategory.updateMenuCategoryDeleteItem(categoryId, itemId);
+		let categoryDeleted = await MenuCategory.updateMenuCategoryDeleteItem(item.category, itemId);
 		if (!itemDeleted || !categoryDeleted) {
 			throw {
 				status: 500,

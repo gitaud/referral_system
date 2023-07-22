@@ -1,6 +1,6 @@
 const MenuService = require("../services/MenuService");
 
-const createNewCategory = async (req, res) => {
+const createCategory = async (req, res) => {
 	try {
 		const name = req.body.name;
 		if (!name) {
@@ -18,16 +18,16 @@ const createNewCategory = async (req, res) => {
 	}
 }
 
-const createNewMenuItem = async (req, res) => {
+const createMenuItem = async (req, res) => {
 	try {
-		const categoryId = req.params.id;
+		const categoryId = req.body.category;
 		if (!categoryId) {
 			throw {
 				status: 400,
 				message: "Select category first"
 			}
 		}
-		if (!req.body.name || req.body.price) {
+		if (!req.body.name || !req.body.price) {
 			throw {
 				status: 400,
 				message: `Name and price values must be added`
@@ -166,8 +166,8 @@ const deleteMenuCategory = async (req, res) => {
 }
 
 module.exports = {
-	createNewCategory,
-	createNewMenuItem,
+	createCategory,
+	createMenuItem,
 	getMenuCategory,
 	getAllMenuCategories,
 	updateMenuCategoryDetails,
