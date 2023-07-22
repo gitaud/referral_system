@@ -1,0 +1,50 @@
+.categoryList {
+  flex: 4;
+  width: 100%;
+  min-height: 400px;
+}
+
+.categoryListLink {
+  text-decoration: none;
+  color: #000000;
+}
+
+.categoryListItem {
+  display: flex;
+  align-items: center;
+}
+
+.categoryListImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.categoryListEdit {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #3bb077;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
+
+}
+
+.categoryListDelete {
+  color: red;
+  cursor: pointer;
+}
+
+.createButton {
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  margin: 15px;
+  cursor: pointer;
+  background-color: darkblue;
+  color: whitesmoke;
+  font-weight: 600;
+}

@@ -9,9 +9,9 @@ const createNewCategory = async (token, data) => {
 	}
 }
 
-const createNewMenuItem = async (token, categoryId, data) => {
+const createNewMenuItem = async (token, data) => {
 	try {
-		const response = await userRequest(token).post(`/menu/items/${categoryId}`, data);
+		const response = await userRequest(token).post("/menu/items", data);
 		return response.data;
 	} catch(error) {
 		throw new Error("Could not create menu item", { cause: error })
@@ -29,7 +29,12 @@ const getMenuCategory = async (token, id) => {
 
 const getAllMenuCategories = async (token, filterParams) => {
 	try {
-		const response = await userRequest(token).get(`/menu/categories?${filterParams}`);
+		let response;
+		if (filterParams) {
+			response = await userRequest(token).get(`/menu/categories?${filterParams}`);
+		} else {
+			response = await userRequest(token).get(`/menu/categories`);
+		}
 		return response.data
 	} catch(error) {
 		throw new Error("Could not fetch categories", { cause: error });

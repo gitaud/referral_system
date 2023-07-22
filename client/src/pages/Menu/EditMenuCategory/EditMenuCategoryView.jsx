@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from "../styles/MenuForm.module.css";
 
-const CreateMenuCategoryView = ({ form, onSubmit }) => {
+export default function EditMenuCategoryView({ form, onSubmit }) {
 	const { formState, register, handleSubmit } = form;
 	const { errors, isSubmitting } = formState;
+
 
 	return (
 		<div className={styles.menuForm}>
 			<div className={styles.menuFormContainer}>
 				<div className={styles.menuFormUpdate}>
-					<span className={styles.menuFormUpdateTitle}>Create New Menu Category</span>
+					<span className={styles.menuFormUpdateTitle}>Edit Category</span>
 					<form className={styles.menuFormUpdateForm} onSubmit={handleSubmit(onSubmit)}>
 						<div className={styles.menuFormUpdateLeft}>
 							<div className={styles.menuFormUpdateItem}>
@@ -18,17 +19,13 @@ const CreateMenuCategoryView = ({ form, onSubmit }) => {
 								{errors && <div className={styles.menuForm}>{errors?.name?.message}</div>}
 							</div>
 							<div className={styles.menuFormUpdateItem}>
-
-								<button className={styles.menuFormUpdateButton} disabled={isSubmitting} type="submit">Create</button>
+								<button className={styles.menuFormUpdateButton} disabled={isSubmitting} type="submit">Update</button>
 							</div>
 						</div>
-						<div className={styles.menuFormUpdateRight}>
-						</div>
+						<div className={styles.menuFormUpdateRight} />
 					</form>
 				</div>
 			</div>
 		</div>
 	);
 }
-
-export default CreateMenuCategoryView;

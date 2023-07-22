@@ -14,6 +14,12 @@ const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserFor
 const TransactionList = lazy(() => import('./pages/Transactions/TransactionList/TransactionList'));
 const CreateTransactionForm = lazy(() => import('./pages/Transactions/CreateTransaction/CreateTransactionForm'));
 const ViewTransaction = lazy(() => import('./pages/Transactions/ViewTransaction/ViewTransaction'));
+const ListMenuCategories = lazy(() => import('./pages/Menu/ListMenuCategories/ListMenuCategories'));
+const CreateMenuCategory = lazy(() => import('./pages/Menu/CreateMenuCategory/CreateMenuCategory'));
+const EditMenuCategory = lazy(() => import('./pages/Menu/EditMenuCategory/EditMenuCategory'));
+const ViewCategory = lazy(() => import('./pages/Menu/ViewCategory/ViewCategory'));
+const CreateMenuItem = lazy(() => import('./pages/Menu/CreateMenuItem/CreateMenuItem'));
+const EditMenuItem = lazy(() => import('./pages/Menu/EditMenuItem/EditMenuItem'));
 
 
 function App() {
@@ -41,6 +47,12 @@ function App() {
 							<Route path="/transactions" element={<TransactionList />} />
 							<Route path="/transactions/new" element={<CreateTransactionForm />} />
 							<Route path="/transaction/:id" element={<ViewTransaction />} />
+							<Route path="/menu" element={<ListMenuCategories  />} />
+							<Route path="/menu/categories/new" element={<CreateMenuCategory />} />
+							<Route path="/menu/categories/:id" element={<ViewCategory />} />
+							<Route path="/menu/categories/:id/edit" element={<EditMenuCategory/>} />
+							<Route path="/menu/categories/:id/items/new" element={<CreateMenuItem />} />
+							<Route path="/menu/items/:id" element={<EditMenuItem />} />
 						</Route>
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />

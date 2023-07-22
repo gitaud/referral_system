@@ -39,6 +39,12 @@ export default function Sidebar() {
                 New Transaction
               </li>
             </Link>
+            <Link to="/menu" className={styles.link}>
+              <li className={styles.sidebarListItem}>
+                <Storefront className={styles.sidebarIcon} />
+                View Menu
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
