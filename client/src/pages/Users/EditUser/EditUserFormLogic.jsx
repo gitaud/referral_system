@@ -33,20 +33,15 @@ const EditUserFormLogic = ({ id, defaultValues, onSubmit }) => {
 					title: 'User info saved',
 					showConfirmButton: true,
 					timer: 2000
-				}).then(result => {
-					if (result.isConfirmed) {
-						window.location.reload();
-					}
 				})
 			}, 1500);
+			window.location.reload();
 		} catch(error) {
-			console.log(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
 				text: 'Something went wrong!'
 			});
-			console.log(error);
 		}
 	}
 

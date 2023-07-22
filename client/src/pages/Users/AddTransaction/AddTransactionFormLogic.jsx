@@ -30,12 +30,9 @@ const AddTransactionFormLogic = ({ usrData, defaultValues, onSubmit }) => {
 					title: 'Transaction saved',
 					showConfirmButton: true,
 					timer: 2000
-				}).then(result => {
-					if (result.isConfirmed) {
-						window.location.reload();
-					}
 				})
 			}, 1500);
+			window.location.reload();
 		} catch (error) {
 			console.log(error);
 			Swal.fire({

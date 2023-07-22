@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 import { useAuthContext } from '../../../context/AuthContext';
 import { DateFilterContextProvider } from '../../../context/DateFilterContext';
 import { getOneUser } from '../../../apiCalls/userApiCalls';
-import { getOneLevel } from '../../../apiCalls/levelApiCalls';
 import EditUserForm from '../EditUser/EditUserForm';
 import AddReferralForm from '../AddReferral/AddReferralForm';
 import AddTransactionForm from '../AddTransaction/AddTransactionForm';

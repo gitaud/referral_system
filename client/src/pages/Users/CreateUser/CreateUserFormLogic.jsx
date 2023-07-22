@@ -56,12 +56,9 @@ const CreateUserFormLogic = ({ defaultValues, user, onSubmit }) => {
 					title: 'User info saved',
 					showConfirmButton: true,
 					timer: 2000
-				}).then(result => {
-					if (result.isConfirmed) {
-						navigate(`/user/${newUser._id}`);
-					}
 				})
 			}, 1500)
+			navigate(`/user/${newUser._id}`);
 		} catch (error) {
 			console.log(error);
 			Swal.fire({

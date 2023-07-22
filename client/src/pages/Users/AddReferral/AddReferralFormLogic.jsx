@@ -22,12 +22,9 @@ const AddReferralFormLogic = ({ onSubmit }) => {
 					title: 'Referral saved',
 					showConfirmButton: true,
 					timer: 2000
-				}).then(result => {
-					if (result.isConfirmed) {
-						window.location.reload();
-					}
 				})
 			}, 1500);
+			window.location.reload();
 		} catch (error) {
 			Swal.fire({
 				icon: 'error',
