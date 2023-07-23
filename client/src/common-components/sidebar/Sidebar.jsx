@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import {
   AttachMoneyOutlined,
   GroupsOutlined,
+  InsertChartOutlined,
   PermIdentity,
-  Storefront,
+  RestaurantMenu
 } from '@mui/icons-material';
 import styles from "./Sidebar.module.css";
 
@@ -24,12 +25,12 @@ export default function Sidebar() {
             <Link to="/users/new" className={styles.link}>
               <li className={styles.sidebarListItem}>
                 <PermIdentity className={styles.sidebarIcon} />
-                Create new User
+                Create User
               </li>
             </Link>
             <Link to="/transactions" className={styles.link}>
               <li className={styles.sidebarListItem}>
-                <Storefront className={styles.sidebarIcon} />
+                <InsertChartOutlined className={styles.sidebarIcon} />
                 List Transactions
               </li>
             </Link>
@@ -41,7 +42,7 @@ export default function Sidebar() {
             </Link>
             <Link to="/menu" className={styles.link}>
               <li className={styles.sidebarListItem}>
-                <Storefront className={styles.sidebarIcon} />
+                <RestaurantMenu className={styles.sidebarIcon} />
                 View Menu
               </li>
             </Link>
