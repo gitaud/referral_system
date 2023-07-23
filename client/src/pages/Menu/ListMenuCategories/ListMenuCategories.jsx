@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { getAllMenuCategories, deleteMenuCategory } from "../../../apiCalls/menuApiCalls";
 import { useAuthContext } from '../../../context/AuthContext';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
-import styles from './ListMenuCategories.module.css';
+import styles from '../styles/Table.module.css';
 
 export default function ListMenuCategories() {
 
@@ -63,8 +63,8 @@ export default function ListMenuCategories() {
 			flex: 0.66,
 			renderCell: (params) => {
 				return (
-					<Link className={styles.categoryListLink} state={params.row} to={"/menu/categories/" + params.row._id}>
-						<div className={styles.categoryListItem}>
+					<Link className={styles.listLink} state={params.row} to={"/menu/categories/" + params.row._id}>
+						<div className={styles.listItem}>
 							{params.row.name}
 						</div>
 					</Link>
@@ -79,16 +79,19 @@ export default function ListMenuCategories() {
 				return (
 					<>
 						<Link to={"/menu/categories/" + params.row._id} state={params.row}>
-							<button className={styles.categoryListEdit}>Edit</button>
+							<button className={styles.listEdit}>Edit</button>
 						</Link>
-						<DeleteOutline className={styles.categoryListDelete} onClick={() => handleDelete(params.row._id)} />
+						<DeleteOutline className={styles.listDelete} onClick={() => handleDelete(params.row._id)} />
 					</>
 				)
 			}
 		}
 	];
 	return (
-		<div className={styles.categoryList}>
+		<div className={styles.list}>
+			<div className={styles.titleContainer}>
+				<h1>Menu categories </h1>
+			</div>
 			<DataGrid
 				rows={categories}
 				disableSelectionOnClick

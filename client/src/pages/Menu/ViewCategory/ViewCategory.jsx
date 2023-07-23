@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { getMenuCategory, deleteMenuItem } from "../../../apiCalls/menuApiCalls";
 import { useAuthContext } from '../../../context/AuthContext';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
-import styles from './ViewCategory.module.css';
+import styles from '../styles/Table.module.css';
 
 export default function ViewCategory() {
 	const categoryId = useParams().id
@@ -67,7 +67,7 @@ export default function ViewCategory() {
 			flex: 0.50,
 			renderCell: (params) => {
 				return (
-					<div className={styles.categoryListItem}>
+					<div className={styles.listItem}>
 						{params.row.name}
 					</div>
 				)
@@ -82,17 +82,22 @@ export default function ViewCategory() {
 				return (
 					<>
 						<Link to={"/menu/items/" + params.row._id} state={params.row} >
-							<button className={styles.categoryListEdit}>Edit</button>
+							<button className={styles.listEdit}>Edit</button>
 						</Link>
-						<DeleteOutline className={styles.categoryListDelete} onClick={() => handleDelete(params.row._id)} />
+						<DeleteOutline className={styles.listDelete} onClick={() => handleDelete(params.row._id)} />
 					</>
 				)
 			}
 		}
 	];
 	return (category &&
-		<div className={styles.categoryList}>
-			<h1>{category.name}</h1>
+		<div className={styles.list}>
+			<div className={styles.titleContainer}>
+				<h1>{category.name}</h1>
+				<Link to={`/menu/categories/${category._id}/edit`} state={category.name}>
+					<button className={styles.editButton}>Edit</button>
+				</Link>
+			</div>
 			<DataGrid
 				rows={category.items}
 				disableSelectionOnClick
