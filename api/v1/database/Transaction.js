@@ -68,7 +68,7 @@ const getAllTransactions = async (filterParams) => {
 		if (!transactions.length) {
 			throw {
 				status: 400,
-				messge: "No transactions found"
+				message: "No transactions found"
 			}
 		}
 		return transactions;
