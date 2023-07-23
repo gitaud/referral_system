@@ -20,7 +20,7 @@ const login = async (data) => {
 				message: 'Wrong credentials provided'
 			}
 		}
-		const token = TokenHelper.createToken(user, '1d');
+		const token = TokenHelper.createToken(user, '365d');
 		const { password, referrals_made, referred_by, commissionDue, nextLevelRank, ...otherData } = user._doc;
 		return { ...otherData, token }
 	} catch(error) {
