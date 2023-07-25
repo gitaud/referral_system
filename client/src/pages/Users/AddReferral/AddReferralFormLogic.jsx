@@ -4,11 +4,11 @@ import { useUserContext } from '../../../context/UserContext';
 import AddReferralFormView from './AddReferralFormView';
 
 const AddReferralFormLogic = ({ onSubmit }) => {
-	const { user } = useUserContext();
+	const { searchedUser } = useUserContext();
 	
 
 	const handleSubmit = async () => {
-		const referralId = user?.user?._id;
+		const referralId = searchedUser?.user?._id;
 		try {
 			Swal.fire({
 				title: 'Saving',
@@ -34,7 +34,7 @@ const AddReferralFormLogic = ({ onSubmit }) => {
 			});
 		}
 	}
-	return (<AddReferralFormView searchedUser={user.user} onSubmit={handleSubmit} />)
+	return (<AddReferralFormView searchedUser={searchedUser.user} onSubmit={handleSubmit} />)
 }
 
 export default AddReferralFormLogic;
