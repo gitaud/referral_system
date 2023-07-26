@@ -57,13 +57,6 @@
   align-items: center;
 }
 
-.transactionShowImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .transactionShowTopTitle {
   display: flex;
   flex-direction: column;
@@ -116,6 +109,65 @@
   background-color: rgb(240, 240, 250);
 }
 
+.cartWrapper {
+  flex: 1;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+.cart {
+  flex: 1;
+  position: static;
+}
+
+.innerCart {
+  position: static;
+}
+
+.showTitle {
+  font-size: 25px;
+  font-weight: 600;
+  color: rgb(82, 77, 77);
+}
+
+.smallTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(82, 77, 77);
+  margin: 15px 0px 5px 0px;
+}
+
+.line {
+  margin: 15px 0px;
+  color: rgb(82, 77, 77);
+}
+
+.itemInfo {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartItemInfo {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0px;
+}
+
+.itemName {
+  flex: 2;
+  color: rgb(95, 92, 92);
+}
+
+.itemPrice {
+  flex: 1;
+  color: rgb(95, 92, 92);
+}
+
 
 @media screen and (max-width: 450px) {
   .transactionContainer {
@@ -132,5 +184,20 @@
   .transactionButtons {
     width: 200px;
     flex-direction: column;
+  }
+  .cartWrapper {
+    position: static;
+    width: 95%;
+    flex: 1;
+    margin-left: 20px;
+    height: auto;
+  }
+
+  .cart {
+    height: auto;
+  }
+
+  .innerCart {
+    height: auto;
   }
 }

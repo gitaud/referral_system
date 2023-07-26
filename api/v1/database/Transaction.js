@@ -15,21 +15,14 @@ const createTransaction = async (data) => {
 
 const getOneTransaction = async (transactionId) => {
 	try {
-		let transaction = await Transaction.findById(transactionId)
-			.populate({
-				path: 'customer_id', 
-				select: 'name'
-			}).exec();
+		const transaction = await Transaction.findById(transactionId)
+			.populate('customer_id', 'name level').exec();
 		if (!transaction) {
 			throw {
 				status: 400,
 				message: `No transaction with the id ${transactionId} found`
 			}
 		}
-		await transaction.populate({
-			path: 'recorded_by',
-			select: 'name'
-		}).exec();
 		return transaction;
 	} catch(error) {
 		throw {
@@ -48,20 +41,21 @@ const getAllTransactions = async (filterParams) => {
 		}
 		dateFilter.lte.setHours(23, 59, 59);
 		
-		
-		transactions = await Transaction.find({ 
-			createdAt: { 
-				$gte: dateFilter.gte, 
-				$lte: dateFilter.lte
-			}
-		}).select('customer_id amount recorded_by createdAt').populate({
-				path: 'customer_id',
-				select: 'name'
-			}).exec();
-
-
 		if (filterParams.customer_id) {
-			transactions = transactions.filter(transaction => transaction.customer_id == filterParams.customer_id)
+			transactions = await Transaction.find({
+				createdAt: {
+					$gte: dateFilter.gte,
+					$lte: dateFilter.lte
+				},
+				customer_id: filterParams.customer_id
+			}).select('customer_id amount commission recorded_by createdAt').populate('customer_id', 'name').exec();
+		} else {
+			transactions = await Transaction.find({ 
+				createdAt: { 
+					$gte: dateFilter.gte, 
+					$lte: dateFilter.lte
+				}
+			}).select('customer_id amount commission recorded_by createdAt');
 		}
 
 

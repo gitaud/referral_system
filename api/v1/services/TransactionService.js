@@ -16,6 +16,8 @@ const createTransaction = async (data) => {
 			level = await LevelService.getOneLevel(data.customer_level_id);
 			commission = Number(data.amount) * (level.savings / 100);
 			newTransaction.commission = RoundOffHelper.roundToZero(commission);
+		} else {
+			newTransaction.customer_id = null;
 		}
 		transaction = await Transaction.createTransaction(newTransaction);
 		
@@ -37,8 +39,12 @@ const createTransaction = async (data) => {
 
 const getOneTransaction = async (transactionId) => {
 	try {
+		let level;
 		let transaction = await Transaction.getOneTransaction(transactionId);
-		return { transaction };
+		if (transaction.customer_id?.level) {
+			level = await LevelService.getOneLevel(transaction.customer_id.level);
+		}
+		return { ...transaction._doc, level};
 	} catch (error) {
 		throw error;
 	}

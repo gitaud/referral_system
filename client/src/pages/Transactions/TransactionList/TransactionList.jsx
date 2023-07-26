@@ -19,23 +19,9 @@ const InnerTransactionListContainer = () => {
   useLayoutEffect(() => {
     const getTransactions = async () => {
       try {
-        Swal.fire({
-          title: 'Fetching',
-          timer: 2000,
-          didOpen: () => Swal.showLoading(),
-        })
         const filterParams = `date_gte=${dates.date_gte}&date_lte=${dates.date_lte}`
         const transactionsFound = await getAllTransactions(user.authToken, filterParams);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Transactions Found',
-          showConfirmButton: true,
-        }).then(result => {
-          if (result.isConfirmed) {
-            setTransactions(transactionsFound);
-          }
-        })
+        setTransactions(transactionsFound);
       } catch (error) {
         console.log(error.cause);
         Swal.fire({
@@ -82,7 +68,7 @@ const InnerTransactionListContainer = () => {
       renderCell: (params) => {
         return (
           <>
-            Ksh {params.row.commission}
+            Ksh {params.row.commission || 0}
           </>
         )
       }
