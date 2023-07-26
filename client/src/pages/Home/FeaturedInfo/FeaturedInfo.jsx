@@ -31,7 +31,7 @@ export default function FeaturedInfo() {
 			<div className={styles.featuredItem}>
 				<span className={styles.featuredTitle}>Revenue</span>
 				<div className={styles.featuredMoneyContainer}>
-					<span className={styles.featuredMoney}>Ksh {income?.length > 1 ? income[1].total : 0}</span>
+					<span className={styles.featuredMoney}>Ksh {income?.length > 1 ? income[1].total : income[0]?.total }</span>
 					<span className={styles.featuredMoneyRate}>{Math.floor(percentage)} % {percentage > 0 ? <ArrowUpward className={styles.featuredIcon} /> : <ArrowDownward className={styles.featuredIconnegative} />}</span>
 				</div>
 				<span className={styles.featuredSub}>Compared to last month's Ksh { income?.length > 1 ? income[0].total : 0}</span>
