@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { 
 	AccountBalanceWalletOutlined,
-	AttachMoneyOutlined,
 	BorderColorOutlined,
 	GroupsOutlined,
 	Link, 
@@ -17,7 +16,6 @@ import { DateFilterContextProvider } from '../../../context/DateFilterContext';
 import { getOneUser } from '../../../apiCalls/userApiCalls';
 import EditUserForm from '../EditUser/EditUserForm';
 import AddReferralForm from '../AddReferral/AddReferralForm';
-import AddTransactionForm from '../AddTransaction/AddTransactionForm';
 import ListUserTransactions from '../ListUserTransactions/ListUserTransactions';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
 import styles from "./ViewUser.module.css";
@@ -93,12 +91,6 @@ export default function User() {
 							<RequestPageOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>List Transactions</span>
 						</div>
-						<div className={styles.userShowInfo + " " + styles.link} onClick={
-							() => changeMode("newtransaction")
-						}>
-							<AttachMoneyOutlined className={styles.userShowIcon} />
-							<span className={styles.userShowInfoTitle}>Add Transaction</span>
-						</div>
 						<div className={styles.userShowInfo + " " + styles.link } onClick={() => changeMode("edit")}>
 							<BorderColorOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Edit User</span>
@@ -116,9 +108,7 @@ export default function User() {
 						<EditUserForm usrData={usrData} /> 
 					: mode === "referral" ? 
 						<AddReferralForm usrData={usrData} /> 
-					: mode === "newtransaction" ? 
-						<AddTransactionForm usrData={usrData} /> 
-					: 
+					:
 						<DateFilterContextProvider>
 							<ListUserTransactions selectedUser={usrData} />
 						</DateFilterContextProvider>
