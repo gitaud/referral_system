@@ -43,7 +43,7 @@ export default function WidgetLg() {
 						<tr className={styles.widgetLgTr} key={transaction._id}>
 							<td className={styles.widgetLgDate}>{new Date(transaction.createdAt).toDateString()}</td>
 							<td className={styles.widgetLgAmount}>Ksh {transaction.amount}</td>
-							<td className={styles.widgetLgAmount}>Ksh {transaction.commission}</td>
+							<td className={styles.widgetLgAmount}>Ksh {transaction.commission || 0}</td>
 							<td className={styles.widgetLgStatus}>
 								<Link className={styles.widgetLgButton} to={`transaction/${transaction._id}`}>
 									View
