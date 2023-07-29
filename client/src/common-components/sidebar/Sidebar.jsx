@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   AttachMoneyOutlined,
   GroupsOutlined,
+  HomeOutlined,
   InsertChartOutlined,
   PermIdentity,
   RestaurantMenu
@@ -16,6 +17,12 @@ export default function Sidebar() {
         <div className={styles.sidebarMenu}>
           <h2 className={styles.sidebarTitle}>Dashboard</h2>
           <ul className={styles.sidebarList}>
+            <Link to="/" className={styles.link}>
+              <li className={styles.sidebarListItem}>
+                <HomeOutlined className={styles.sidebarIcon} />
+                Homepage
+              </li>
+            </Link>
             <Link to="/users" className={styles.link}>
               <li className={styles.sidebarListItem}>
                 <GroupsOutlined className={styles.sidebarIcon} />
