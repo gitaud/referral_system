@@ -10,6 +10,8 @@ const createTransaction = async (data) => {
 			amount: data.amount,
 			recorded_by: data.recorded_by,
 			items: data.items,
+			redeemed: data.redeemed,
+			redeemedTotal: data.redeemedTotal
 		}
 		if (data.customer_level_id) {
 			newTransaction.customer_id = data.customer_id;
@@ -22,8 +24,14 @@ const createTransaction = async (data) => {
 		transaction = await Transaction.createTransaction(newTransaction);
 		
 		if (transaction) {
-			if (transaction.customer_id) {
-				userUpdated = await UserService.updateUserCommissionDue(transaction.customer_id, transaction.commission, false);
+			if (transaction.customer_id._id) {
+				console.log(transaction);
+				userUpdated = await UserService.updateUserCommissionDue({
+					id: transaction.customer_id._id, 
+					commission: transaction.commission, 
+					redeemed: transaction.redeemed,
+					pointsRedeemed: RoundOffHelper.roundToZero(Number(transaction.amount) - Number(transaction.redeemedTotal))
+				});
 			}
 			return transaction;
 		} else {

@@ -6,7 +6,7 @@ import {
 	PermIdentity,
 } from "@mui/icons-material";
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../context/AuthContext';
 import { getOneTransaction } from '../../../apiCalls/transactionApiCalls';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
@@ -47,7 +47,12 @@ export default function ViewTransaction() {
 						<span className={styles.transactionShowTitle}>Transaction Details</span>
 						<div className={styles.transactionShowInfo}>
 							<PermIdentity className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Customer: {transaction.customer_id?.name || 'Not Registered'}</span>
+							{
+								transaction.customer_id ?
+									<Link to={`/user/${transaction.customer_id._id}`} className={styles.link}>Customer: {transaction.customer_id?.name}</Link>
+								:
+									<span className={styles.transactionShowInfoTitle}>Customer: Not Registered</span>
+							}
 						</div>
 						<span className={styles.transactionShowTitle}>Level and Commission</span>
 						<div className={styles.transactionShowInfo}>

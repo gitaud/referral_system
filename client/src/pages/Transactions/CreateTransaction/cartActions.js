@@ -2,6 +2,8 @@ import { cloneDeep } from 'lodash';
 export const ADD_TO_CART = "ADD TO CART";
 export const INCREASE_QUANTITY = "INCREASE QUANTITY";
 export const DECREASE_QUANTITY = "DECREASE QUANTITY";
+export const REDEEM_POINTS_TRUE = "REDEEM POINTS TRUE";
+export const REDEEM_POINTS_FALSE = "REDEEM POINTS FALSE";
 
 export const addToCart =  (data) => {
 	return { type: ADD_TO_CART, data }
@@ -15,9 +17,18 @@ export const decreaseQuantity = (data) => {
 	return { type: DECREASE_QUANTITY, data } 
 }
 
+export const redeemPoints = (data) => {
+	if (data.redeem === true) {
+		return { type: REDEEM_POINTS_TRUE, data }
+	} else {
+		return { type: REDEEM_POINTS_FALSE, data }
+	}
+}
+
 export const defaultCartState = {
 	categories: {},
-	total: 0
+	trueTotal: 0,
+	redeemedTotal: 0
 }
 
 
@@ -48,17 +59,20 @@ export const cartReducer = (state, action) => {
 			}
 			newState.categories[categoryId].items[item._id].quantity += 1;
 			newState.categories[categoryId].items[item._id].total += item.price;
-			newState.total += item.price
+			newState.trueTotal += item.price;
+			newState.redeemedTotal += item.price;
 			return newState;
 		case INCREASE_QUANTITY:
 			newState.categories[categoryId].items[item._id].quantity += 1;
 			newState.categories[categoryId].items[item._id].total += item.price;
-			newState.total += item.price
+			newState.trueTotal += item.price;
+			newState.redeemedTotal += item.price;
 			return newState;
 		case DECREASE_QUANTITY:
 			if (newState.categories[categoryId].items[item._id].quantity === 1) {
 				delete newState.categories[categoryId].items[item._id];
-				newState.total -= item.price;
+				newState.trueTotal -= item.price;
+				newState.redeemedTotal -= item.price;
 				let itemsInCategory;
 				for (let prop in newState.categories[categoryId].items) {
 					if (newState.categories[categoryId].items.hasOwnProperty(prop)) {
@@ -72,9 +86,20 @@ export const cartReducer = (state, action) => {
 			} else {
 				newState.categories[categoryId].items[item._id].total -= item.price;
 				newState.categories[categoryId].items[item._id].quantity -= 1;
-				newState.total -= item.price;
+				newState.trueTotal -= item.price;
+				newState.redeemedTotal -= item.price;
 				return newState;
 			}
+		case REDEEM_POINTS_TRUE:
+			if (action.data.points >= newState.trueTotal) {
+				newState.redeemedTotal = 0;
+			} else {
+				newState.redeemedTotal -= action.data.points;
+			}
+			return newState;
+		case REDEEM_POINTS_FALSE:
+			newState.redeemedTotal = newState.trueTotal;
+			return newState
 		default:
 			return state;
 	}

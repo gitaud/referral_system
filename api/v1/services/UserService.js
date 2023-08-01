@@ -170,17 +170,21 @@ const updateUserAddReferral = async (referrerId, referredId) => {
 	}
 }
 
-const updateUserCommissionDue = async (userId, amount, reset) => {
+const updateUserCommissionDue = async (data) => {
 	try {
-		let user;
-		if (reset) {
-			commissionDue = await User.getOneUser(userId).commissionDue;
-			user = await User.updateUser(userId, {commissionDue: 0});
-			SMSHelper.sendCommissionPaidMsg(user, commissionDue);
+		// data
+		// data.id,
+		// data.commission,
+		// data.redeemed
+		// data.pointsRedeemed 
+		let user = await User.getOneUser(data.id)
+		if (data.redeemed) {
+			const newCommission = user.commissionDue - data.pointsRedeemed + data.commission;
+			user = await User.updateUser(data.id, {commissionDue: newCommission});
+			SMSHelper.sendCommissionPaidMsg(user, user.commissionDue);
 		} else {
-			user = await User.getOneUser(userId);
-			user = await User.updateUser(userId, { commissionDue: amount + user.commissionDue });
-			SMSHelper.sendCommissionEarnedMsg(user, amount);
+			user = await User.updateUser(data.id, { commissionDue: data.commission + user.commissionDue });
+			SMSHelper.sendCommissionEarnedMsg(user, data.commission);
 		}
 		return true;
 	} catch(error) {

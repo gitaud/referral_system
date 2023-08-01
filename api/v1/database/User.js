@@ -30,7 +30,7 @@ const getOneUser = async (userId) => {
 
 const searchUser = async (searchParams) => {
 	try {
-		const user = await User.findOne(searchParams).select('id name level nextLevelRank email phone referred_by password referrals_made isAdmin isSuperAdmin').populate('level', 'name _id').exec();
+		const user = await User.findOne(searchParams).populate('level', 'name _id').exec();
 		if (!user) {
 			throw {
 				status: 400,

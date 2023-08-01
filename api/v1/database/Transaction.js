@@ -49,14 +49,14 @@ const getAllTransactions = async (filterParams) => {
 					$lte: dateFilter.lte
 				},
 				customer_id: filterParams.customer_id
-			}).select('customer_id amount commission recorded_by createdAt').populate('customer_id', 'name').exec();
+			}).select('customer_id amount commission recorded_by createdAt').sort("-createdAt").populate('customer_id', 'name').exec();
 		} else {
 			transactions = await Transaction.find({ 
 				createdAt: { 
 					$gte: dateFilter.gte, 
 					$lte: dateFilter.lte
 				}
-			}).select('customer_id amount commission recorded_by createdAt');
+			}).select('customer_id amount commission recorded_by createdAt').sort("-createdAt");
 		}
 
 

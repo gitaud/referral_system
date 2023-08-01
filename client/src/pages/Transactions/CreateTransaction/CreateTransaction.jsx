@@ -20,6 +20,7 @@ import {
 	addToCart,
 	increaseQuantity,
 	decreaseQuantity,
+	redeemPoints,
 	cartReducer 
 } from './cartActions';
 import CreatePDF from './CreatePDF';
@@ -33,14 +34,26 @@ const Inner = () => {
 	const { searchedUser, dispatch } = useUserContext();
 	const [categories, setCategories] = useState([]);
 	const [ searchTrue, setSearchTrue ] = useState(false);
+	const [ redeem, setRedeem ] = useState(false);
 	const [ cart, dispatchCart ] = useReducer(cartReducer, defaultCartState);
 
 	const handleChange = () => {
+		if (searchTrue && searchedUser.user) {
+			setRedeem(false);
+			dispatchCart(redeemPoints({ redeem: false, points: searchedUser.user.commissionDue }))
+		}
 		setSearchTrue(!searchTrue);
+	}
+
+	const handleRedeem = () => {
+		setRedeem(!redeem);
+		dispatchCart(redeemPoints({ redeem: !redeem, points: searchedUser.user.commissionDue }))
 	}
 
 	const handleChangeUser = () => {
 		setSearchTrue(true);
+		setRedeem(false);
+		dispatchCart(redeemPoints({redeem: false, points: searchedUser.user.commissionDue}))
 		dispatch(initialize());
 	}
 
@@ -77,8 +90,10 @@ const Inner = () => {
 				cartObj.customer_id = null;
 				cartObj.customer_level_id = null;
 			}
+			cartObj.redeemed = redeem;
 			cartObj.recorded_by = user.id;
-			cartObj.amount = cart.total;
+			cartObj.amount = cart.trueTotal;
+			cartObj.redeemedTotal = cart.redeemedTotal;
 			Swal.fire({
 				title: 'Saving',
 				timer: 2000,
@@ -100,7 +115,7 @@ const Inner = () => {
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
-				text: `${error?.cause?.response?.data || 'Cannot create order'}`
+				text: 'Cannot create order'
 			})
 		}
 	} 
@@ -237,7 +252,7 @@ const Inner = () => {
 								Order Total: 
 							</p>
 							<p className={styles.itemPrice}></p>
-							<p className={styles.itemPrice}>Ksh {cart.total}</p>
+							<p className={styles.itemPrice}>Ksh {cart.redeemedTotal}</p>
 						</div>
 						<div className={styles.setSearch}>
 							<input className={styles.checkBox} value={searchTrue} checked={searchTrue} type="checkbox" id="searchUser" onChange={handleChange}/>
@@ -249,8 +264,16 @@ const Inner = () => {
 									<div>
 										<div className={styles.itemInfo}>
 											<p className={styles.itemName}>Name: {searchedUser.user.name}</p>
-											<p className={styles.itemName}>Level: {searchedUser.user.level.name} </p>
+											<p className={styles.itemName}>Loyalty Points: {searchedUser.user.commissionDue} </p>
 										</div>
+										{cart.trueTotal ? 
+											<div className={styles.setSearch}>
+												<input className={styles.checkBox} value={redeem} checked={redeem} type="checkbox" id="redeemPoints" onChange={handleRedeem} />
+												<label htmlFor='redeemPoints' className={styles.itemName}>Redeem Loyalty Points? </label>
+											</div>
+											:
+											<></>
+										}
 										<div className={styles.displayUserButton}>
 											<button className={styles.changeUserButton} onClick={handleChangeUser}>Change User</button>
 										</div>
