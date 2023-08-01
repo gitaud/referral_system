@@ -51,13 +51,11 @@ export const cartReducer = (state, action) => {
 			newState.total += item.price
 			return newState;
 		case INCREASE_QUANTITY:
-			console.log("Increase quantity")
 			newState.categories[categoryId].items[item._id].quantity += 1;
 			newState.categories[categoryId].items[item._id].total += item.price;
 			newState.total += item.price
 			return newState;
 		case DECREASE_QUANTITY:
-			console.log("Decrease quantity");
 			if (newState.categories[categoryId].items[item._id].quantity === 1) {
 				delete newState.categories[categoryId].items[item._id];
 				newState.total -= item.price;
