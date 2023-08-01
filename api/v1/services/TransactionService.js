@@ -33,6 +33,7 @@ const createTransaction = async (data) => {
 					pointsRedeemed: RoundOffHelper.roundToZero(Number(transaction.amount) - Number(transaction.redeemedTotal))
 				});
 			}
+			transaction = await Transaction.getOneTransaction(transaction._id);
 			return transaction;
 		} else {
 			throw {

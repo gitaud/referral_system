@@ -4,8 +4,7 @@ const createTransaction = async (data) => {
 	try {
 		const transaction = new Transaction(data);
 		await transaction.save();
-		const returnedTransaction = await getOneTransaction(transaction._id);
-		return returnedTransaction;
+		return transaction;
 	} catch(error) {
 		throw {
 			status: error?.status || 500,
