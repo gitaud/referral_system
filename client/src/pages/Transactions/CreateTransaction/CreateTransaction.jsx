@@ -1,4 +1,6 @@
 import React, { useLayoutEffect, useState, useReducer } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import html2pdf from 'html2pdf.js/dist/html2pdf.min';
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { cloneDeep } from 'lodash';
@@ -20,7 +22,9 @@ import {
 	decreaseQuantity,
 	cartReducer 
 } from './cartActions';
+import CreatePDF from './CreatePDF';
 import styles from "../styles/Menu.module.css";
+
 
 const Inner = () => {
 	useSetDocumentTitle("Create New Transaction");
@@ -38,6 +42,17 @@ const Inner = () => {
 	const handleChangeUser = () => {
 		setSearchTrue(true);
 		dispatch(initialize());
+	}
+
+	const printPdf = (transaction) => {
+		transaction.cashier = user.name;
+		const printElement = ReactDOMServer.renderToString(CreatePDF(transaction));
+		console.log('About to print');
+		html2pdf().from(printElement).toPdf().get('pdf').then(function(pdfObj) {
+			pdfObj.autoPrint();
+			console.log('printing');
+			window.open(pdfObj.output('bloburl'), '_blank');
+		});
 	}
 
 	const handleSubmit = async () => {
@@ -72,14 +87,16 @@ const Inner = () => {
 			const newTransaction = await createTransaction(user.authToken, cartObj);
 			setTimeout(() => {
 				Swal.fire({
-					icon: 'Success',
+					icon: 'success',
 					title: 'Transaction Added',
 					showConfirmButton: true,
 					timer: 2000
 				})
 			}, 1500);
 			navigate(`/transaction/${newTransaction._id}`);
+			printPdf(newTransaction);
 		} catch(error) {
+			console.log(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
@@ -145,8 +162,9 @@ const Inner = () => {
 					<hr className={styles.line}/>
 					<div className={styles.cart}>
 						<div className={styles.itemInfo}>
-							<p className={styles.itemName}>Item</p>
+							<p className={styles.itemPrice}>Item</p>
 							<p className={styles.itemPrice}>Qty</p>
+							<p className={styles.itemPrice}>Price</p>
 							<p className={styles.itemPrice}>Amount</p>
 							<p className={styles.itemPrice}></p>
 						</div>
@@ -168,6 +186,9 @@ const Inner = () => {
 															</p>
 															<p className={styles.itemPrice}>
 																{cart.categories[prop].items[itemProp].quantity}
+															</p>
+															<p className={styles.itemPrice} style={{marginRight: '5px'}}>
+																Ksh {cart.categories[prop].items[itemProp].price}
 															</p>
 															<p className={styles.itemPrice}>
 																Ksh {cart.categories[prop].items[itemProp].total}
@@ -215,6 +236,7 @@ const Inner = () => {
 							<p className={styles.itemName}>
 								Order Total: 
 							</p>
+							<p className={styles.itemPrice}></p>
 							<p className={styles.itemPrice}>Ksh {cart.total}</p>
 						</div>
 						<div className={styles.setSearch}>

@@ -17,10 +17,9 @@ export default function ViewTransaction() {
 	const transactionId = useParams().id;
 	useSetDocumentTitle(`Transaction ${transactionId}`)
 	const [ transaction, setTransaction ] = useState()
-	console.log(transaction);
 
 	useLayoutEffect(() => {
-		const getUser = async () => {
+		const getTransaction = async () => {
 			try {
 				let data = await getOneTransaction(user.authToken, transactionId);
 				setTransaction(data);
@@ -33,7 +32,7 @@ export default function ViewTransaction() {
 				})
 			}
 		}
-		getUser();
+		getTransaction();
 	}, [user, transactionId])
 
 
@@ -76,7 +75,8 @@ export default function ViewTransaction() {
 						<div className={styles.itemInfo}>
 							<p className={styles.itemName}>Item</p>
 							<p className={styles.itemPrice}>Qty</p>
-							<p className={styles.itemPrice}>Amount</p>
+							<p className={styles.itemPrice}>Price</p>
+							<p className={styles.itemPrice}>Total</p>
 						</div>
 						<hr className={styles.line} />
 						<div className={styles.innerCart}>
@@ -96,6 +96,9 @@ export default function ViewTransaction() {
 															</p>
 															<p className={styles.itemPrice}>
 																{transaction.items[prop].items[itemProp].quantity}
+															</p>
+															<p className={styles.itemPrice}>
+																Ksh {transaction.items[prop].items[itemProp].price}
 															</p>
 															<p className={styles.itemPrice}>
 																Ksh {transaction.items[prop].items[itemProp].total}
