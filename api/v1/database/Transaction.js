@@ -4,7 +4,8 @@ const createTransaction = async (data) => {
 	try {
 		const transaction = new Transaction(data);
 		await transaction.save();
-		return transaction
+		const returnedTransaction = await getOneTransaction(transaction._id);
+		return returnedTransaction;
 	} catch(error) {
 		throw {
 			status: error?.status || 500,
@@ -16,7 +17,7 @@ const createTransaction = async (data) => {
 const getOneTransaction = async (transactionId) => {
 	try {
 		const transaction = await Transaction.findById(transactionId)
-			.populate('customer_id', 'name level').exec();
+			.populate('customer_id', 'name level commissionDue').exec();
 		if (!transaction) {
 			throw {
 				status: 400,
