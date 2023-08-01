@@ -54,9 +54,11 @@ function App() {
 							<Route path="/menu/categories/:id/items/new" element={<CreateMenuItem />} />
 							<Route path="/menu/items/:id" element={<EditMenuItem />} />
 						</Route>
+						<Route path="/forbidden" element={<p>Forbidden</p>} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
 						<Route path="/reset/:token" element={<ResetPassword />} />
+						<Route path="*" element={<p>Error 404! Page not found!</p>} />
 					</Routes>
 				</Suspense>
 			</Router>

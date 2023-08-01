@@ -13,6 +13,8 @@ const ProtectedRoute = ({ redirectPath ="/login"}) => {
 		if (user.isLoggedIn === false) {
 			dispatch(logout());
 			navigate(redirectPath);
+		} else if (!user.isAdmin) {
+			navigate("/forbidden")
 		}
 	}, [user, dispatch, navigate, redirectPath])
 	return (
