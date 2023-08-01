@@ -71,7 +71,7 @@ export default function User() {
 							<PermIdentity className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Phone: {usrData.phone}</span>
 						</div>
-						<span className={styles.userShowTitle}>Level and Commission</span>
+						<span className={styles.userShowTitle}>Level and Loyalty Points</span>
 						<div className={styles.userShowInfo}>
 							<MilitaryTechOutlined className={styles.userShowIcon} />
 							<span className={styles.userShowInfoTitle}>Level: {usrData.level.name || 'Not Subscribed'}</span>
@@ -82,7 +82,7 @@ export default function User() {
 						</div>
 						<div className={styles.userShowInfo}>
 							<AccountBalanceWalletOutlined className={styles.userShowIcon} />
-							<span className={styles.userShowInfoTitle}>Commission Earned: Ksh {usrData.commissionDue}</span>
+							<span className={styles.userShowInfoTitle}>Loyalty Points: {usrData.commissionDue}</span>
 						</div>
 						<span className={styles.userShowTitle}>Actions</span>
 						<div className={styles.userShowInfo + " " + styles.link} onClick={
