@@ -31,6 +31,9 @@
     "timeago.js": "^4.0.2",
     "yup": "^1.2.0"
   },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": ""
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts --max_old_space_size=4096 build",
