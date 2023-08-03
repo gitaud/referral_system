@@ -25,7 +25,6 @@ const createTransaction = async (data) => {
 		
 		if (transaction) {
 			if (transaction.customer_id._id) {
-				console.log(transaction);
 				userUpdated = await UserService.updateUserCommissionDue({
 					id: transaction.customer_id._id, 
 					commission: transaction.commission, 
