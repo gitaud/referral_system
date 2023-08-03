@@ -15,20 +15,24 @@ const transporter = nodemailer.createTransport({
 	}
 })
 
-const send = (phrase) => {
-	transporter.sendMail(phrase, status, (err, data) => {
+const send = (message) => {
+	transporter.sendMail(message, (err, data) => {
 		if (err) {
 			console.log(err);
-			status = 'failed'
 		}  else {
 			console.log('Email sent!')
-			status = 'ok'
 		}
 	})
 }
 
 const sendPasswordResetToken = (user, token) => {
-	const message = `Dear ${user.name} reset your password here ${process.env.FRONTEND_DOMAIN}/reset/${token}`;
+	const message = {
+		from: process.env.DEV_EMAIL,
+		to: user.email,
+		subject: 'Password Recovery',
+		text: `Dear ${user.name}, reset your password here ${process.env.FRONTEND_DOMAIN}/reset/${token}`,
+		html: `<p>Dear ${user.name}, reset your password here ${process.env.FRONTEND_DOMAIN}/reset/${token}</p>`
+	}
 	send(message);
 }
 
