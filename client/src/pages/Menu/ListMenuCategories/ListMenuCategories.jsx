@@ -91,6 +91,9 @@ export default function ListMenuCategories() {
 		<div className={styles.list}>
 			<div className={styles.titleContainer}>
 				<h1>Menu categories </h1>
+				<Link to="/menu/categories/new">
+					<button className={styles.editButton}>Create</button>
+				</Link>
 			</div>
 			<DataGrid
 				rows={categories}
