@@ -29,7 +29,7 @@ const AddReferralFormLogic = ({ onSubmit }) => {
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
-				text: `${error.cause?.response?.data || 'Error! Failed to add referral'}`,
+				text: 'Error! Failed to add referral',
 				showConfirmButton: true
 			});
 		}

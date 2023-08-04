@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
+import Swal from 'sweetalert2';
 import { Link } from "react-router-dom"
 import { DataGrid } from '@mui/x-data-grid';
 import { getAllUsers } from "../../../apiCalls/userApiCalls";
@@ -17,9 +18,18 @@ export default function UserList() {
 
 	useLayoutEffect(() => {
 		const getUsers = async () => {
-			if (token) {
-				const users = await getAllUsers(token);
-				setUsers([...users]);
+			try {
+				if (token) {
+					const users = await getAllUsers(token);
+					setUsers([...users]);
+				}
+			} catch (error) {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops',
+					text: 'Something went wrong!',
+					timer: 2000,
+				})
 			}
 		};
 		getUsers();

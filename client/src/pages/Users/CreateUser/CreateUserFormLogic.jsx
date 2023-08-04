@@ -64,7 +64,7 @@ const CreateUserFormLogic = ({ defaultValues, user, onSubmit }) => {
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops',
-				text: `${error?.cause?.response?.data || "Something went wrong!"}`
+				text: "Something went wrong!"
 			});
 		}
 	}

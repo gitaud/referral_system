@@ -32,7 +32,7 @@ export default function TransactionList({ selectedUser }) {
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops',
-					text: error?.cause?.response?.data || 'Could not fetch transactions'
+					text: 'Could not fetch transactions'
 				})
 			}
 		}
