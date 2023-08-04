@@ -47,9 +47,9 @@ const getAllUsers = async (filterParams, limit) => {
 	try {
 		let users;
 		if (limit) {
-			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').populate('level', 'name _id').limit(5).exec();
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').sort('-createdAt').populate('level', 'name _id').limit(5).exec();
 		} else {
-			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').populate('level', 'name _id').exec();
+			users = await User.find(filterParams).select('_id name email phone level referred_by createdAt updatedAt').sort('-createdAt').populate('level', 'name _id').exec();
 		}
 		if (users.length > 0) {
 			return users;
