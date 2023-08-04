@@ -21,7 +21,7 @@ const ResetPassordFormView = ({ form, onSubmit, error }) => {
         />
         {errors && <p className={styles.error}>{errors?.repeatPassword?.message} </p>}
         <button disabled={isSubmitting} className={styles.button} type="submit" >Reset</button>
-        {error && <p className={styles.error}>{error} </p>}
+        {error && <p className={styles.error}>Error! Could not Reset </p>}
         <Link to="/login" className={styles.link}>Forget it! Just log me in</Link>
       </form>
     </div>
