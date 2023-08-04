@@ -1,9 +1,12 @@
 import React, { useState, useLayoutEffect } from 'react';
 import {
 	AccountBalanceWalletOutlined,
-	CalendarViewMonthOutlined,
+	AttachMoneyOutlined,
+	CalendarMonthOutlined,
 	MilitaryTechOutlined,
+	PaymentsOutlined,
 	PermIdentity,
+	PriceCheckOutlined
 } from "@mui/icons-material";
 import Swal from 'sweetalert2';
 import { Link, useParams } from 'react-router-dom';
@@ -23,11 +26,12 @@ export default function ViewTransaction() {
 			try {
 				let data = await getOneTransaction(user.authToken, transactionId);
 				setTransaction(data);
+				console.log(data);
 			} catch (error) {
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops',
-					text: `${error?.cause?.response?.data || 'Something went wrong!'}`,
+					text: 'Something went wrong!',
 					timer: 2000,
 				})
 			}
@@ -60,16 +64,24 @@ export default function ViewTransaction() {
 							<span className={styles.transactionShowInfoTitle}>Level: {transaction.level?.name || 'Not Registered'}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
-							<AccountBalanceWalletOutlined className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Amount: Ksh {transaction.amount || 0}</span>
+							<PriceCheckOutlined className={styles.transactionShowIcon} />
+							<span className={styles.transactionShowInfoTitle}>Order Total: Ksh {transaction.amount || 0}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<AccountBalanceWalletOutlined className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Commission: Ksh {transaction.commission || 0}</span>
+							<span className={styles.transactionShowInfoTitle}>Points Earned: {transaction.commission || 0}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
-							<CalendarViewMonthOutlined className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Date Recorded: {new Date(transaction.createdAt).toString().slice(0, 25)}</span>
+							<PaymentsOutlined className={styles.transactionShowIcon} />
+							<span className={styles.transactionShowInfoTitle}>Points Redeemed: {transaction.amount - transaction.redeemedTotal}</span>
+						</div>
+						<div className={styles.transactionShowInfo}>
+							<AttachMoneyOutlined className={styles.transactionShowIcon} />
+							<span className={styles.transactionShowInfoTitle}>Amount Paid: Ksh {transaction.redeemedTotal}</span>
+						</div>
+						<div className={styles.transactionShowInfo}>
+							<CalendarMonthOutlined className={styles.transactionShowIcon} />
+							<span className={styles.transactionShowInfoTitle}>Recorded: {new Date(transaction.createdAt).toString().slice(0, 25)}</span>
 						</div>
 					</div>
 				</div>
