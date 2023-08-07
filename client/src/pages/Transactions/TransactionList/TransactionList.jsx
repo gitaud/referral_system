@@ -7,6 +7,7 @@ import DatePickerView from '../../../common-components/date-picker/DatePickerVie
 import { DateFilterContextProvider, useDateFilterContext } from '../../../context/DateFilterContext';
 import { getAllTransactions } from '../../../apiCalls/transactionApiCalls';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
+import { KeShilling } from '../../../utils/currencyFormatter';
 import styles from "./TransactionList.module.css";
 
 
@@ -56,19 +57,19 @@ const InnerTransactionListContainer = () => {
       renderCell: (params) => {
         return (
           <>
-            Ksh {params.row.amount}
+            { KeShilling.format(params.row.amount) }
           </>
         )
       }
     },
     {
       field: "commission",
-      headerName: "Commission",
+      headerName: "Points",
       flex: 0.20,
       renderCell: (params) => {
         return (
           <>
-            Ksh {params.row.commission || 0}
+            {params.row.commission || 0} pts
           </>
         )
       }

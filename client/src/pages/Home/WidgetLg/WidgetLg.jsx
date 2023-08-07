@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../../context/AuthContext';
 import { getAllTransactions } from "../../../apiCalls/transactionApiCalls";
+import { KeShilling } from '../../../utils/currencyFormatter';
 import styles from "./WidgetLg.module.css";
 
 export default function WidgetLg() {
@@ -42,8 +43,8 @@ export default function WidgetLg() {
 					{transactions && transactions.map((transaction) => (
 						<tr className={styles.widgetLgTr} key={transaction._id}>
 							<td className={styles.widgetLgDate}>{new Date(transaction.createdAt).toDateString()}</td>
-							<td className={styles.widgetLgAmount}>Ksh {transaction.amount}</td>
-							<td className={styles.widgetLgAmount}>Ksh {transaction.commission || 0}</td>
+							<td className={styles.widgetLgAmount}>{KeShilling.format(transaction.amount)}</td>
+							<td className={styles.widgetLgAmount}>{transaction.commission || 0}</td>
 							<td className={styles.widgetLgStatus}>
 								<Link className={styles.widgetLgButton} to={`transaction/${transaction._id}`}>
 									View

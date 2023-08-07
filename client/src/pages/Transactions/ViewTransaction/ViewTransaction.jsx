@@ -13,6 +13,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../context/AuthContext';
 import { getOneTransaction } from '../../../apiCalls/transactionApiCalls';
 import useSetDocumentTitle from '../../../common-hooks/setDocumentTitle';
+import { KeShilling } from '../../../utils/currencyFormatter';
 import styles from "./ViewTransaction.module.css";
 
 export default function ViewTransaction() {
@@ -65,7 +66,7 @@ export default function ViewTransaction() {
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<PriceCheckOutlined className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Order Total: Ksh {transaction.amount || 0}</span>
+							<span className={styles.transactionShowInfoTitle}>Order Total: {KeShilling.format(transaction.amount) || KeShilling.format(0)}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<AccountBalanceWalletOutlined className={styles.transactionShowIcon} />
@@ -77,7 +78,7 @@ export default function ViewTransaction() {
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<AttachMoneyOutlined className={styles.transactionShowIcon} />
-							<span className={styles.transactionShowInfoTitle}>Amount Paid: Ksh {transaction.redeemedTotal}</span>
+							<span className={styles.transactionShowInfoTitle}>Amount Paid: {KeShilling.format(transaction.redeemedTotal)}</span>
 						</div>
 						<div className={styles.transactionShowInfo}>
 							<CalendarMonthOutlined className={styles.transactionShowIcon} />
@@ -137,7 +138,7 @@ export default function ViewTransaction() {
 							<p className={styles.itemName}>
 								Order Total:
 							</p>
-							<p className={styles.itemPrice}>Ksh {transaction.amount}</p>
+							<p className={styles.itemPrice}>{KeShilling.format(transaction.amount)}</p>
 						</div>
 					</div>
 				</div>
