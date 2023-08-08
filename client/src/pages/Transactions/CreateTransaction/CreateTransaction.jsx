@@ -58,7 +58,6 @@ const Inner = () => {
 	}
 
 	const printPdf = (transaction) => {
-		transaction.cashier = user.name;
 		const printElement = ReactDOMServer.renderToString(CreatePDF(transaction));
 		console.log('About to print');
 		html2pdf().from(printElement).toPdf().get('pdf').then(function(pdfObj) {
