@@ -16,7 +16,16 @@ const createTransaction = async (data) => {
 const getOneTransaction = async (transactionId) => {
 	try {
 		const transaction = await Transaction.findById(transactionId)
-			.populate('customer_id', 'name level commissionDue').exec();
+			.populate([
+				{
+					path: 'customer_id', 
+					select: 'name level commissionDue'
+				},
+				{
+					path: 'recorded_by',
+					select: 'name'
+				}
+			]).exec();
 		if (!transaction) {
 			throw {
 				status: 400,
