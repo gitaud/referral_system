@@ -45,6 +45,9 @@ export default function ViewTransaction() {
 		<div className={styles.transaction}>
 			<div className={styles.transactionTitleContainer}>
 				<h1 className={styles.transactionTitle}>View Transaction </h1>
+				<Link to={`/transaction/${transaction._id}/print`} target="_blank" onClick={() => localStorage.setItem('transaction', JSON.stringify(transaction))}>
+					<button className={styles.transactionAddButton}>Print</button>
+				</Link>
 			</div>
 			<div className={styles.transactionContainer}>
 				<div className={styles.transactionShow}>

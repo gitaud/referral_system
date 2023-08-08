@@ -1,6 +1,4 @@
 import React, { useLayoutEffect, useState, useReducer } from 'react';
-import ReactDOMServer from 'react-dom/server';
-import html2pdf from 'html2pdf.js/dist/html2pdf.min';
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { cloneDeep } from 'lodash';
@@ -23,7 +21,6 @@ import {
 	redeemPoints,
 	cartReducer 
 } from './cartActions';
-import CreatePDF from './CreatePDF';
 import styles from "../styles/Menu.module.css";
 
 
@@ -58,13 +55,8 @@ const Inner = () => {
 	}
 
 	const printPdf = (transaction) => {
-		const printElement = ReactDOMServer.renderToString(CreatePDF(transaction));
-		console.log('About to print');
-		html2pdf().from(printElement).toPdf().get('pdf').then(function(pdfObj) {
-			pdfObj.autoPrint();
-			console.log('printing');
-			window.open(pdfObj.output('bloburl'), '_blank');
-		});
+		localStorage.setItem("transaction", JSON.stringify(transaction));
+		window.open(`${window.location.origin}/transaction/${transaction._id}/print`, '_blank', 'rel=noopener noreferrer');
 	}
 
 	const handleSubmit = async () => {

@@ -1,95 +1,144 @@
-import React from 'react';
-import styles from "./pdf.module.css";
+import React, { useEffect } from 'react';
+import { KeShilling } from '../../../utils/currencyFormatter';
+import styles from "./pdf.module.scss";
 
-export default function CreatePDF(transaction) {
-	return (
-		<div className={styles.cartWrapper}>
-			<div className={styles.topItems}>
-				<p className={styles.topItem}>{new Date(transaction.createdAt).toString()}</p>
-				<p className={styles.topItem}>ID: {transaction._id}</p>
-			</div>
-			<div className={styles.titleContainer}>
-				<p className={styles.showTitle}>KIJANA MSAFI</p>
-				<p className={styles.smallTopTitle}>P.O BOX 12454 - 00400 Nrb</p>
-				<p className={styles.smallTopTitle}>KRA PIN A0001230345T</p>
-				<p className={styles.smallTopTitle}>Tel: 0722697202</p>
-			</div>
-			<p>Served by: {transaction.cashier}</p>
-			<hr className={styles.line} />
-			<div className={styles.cart}>
-				<div className={styles.itemInfo}>
-					<p className={styles.itemName}>Item</p>
-					<p className={styles.itemPrice}>Qty</p>
-					<p className={styles.itemPrice}>Price</p>
-					<p className={styles.itemPrice}>Total</p>
-				</div>
-				<hr className={styles.line} />
-				<div className={styles.innerCart}>
-					{(() => {
-						let elems = [];
-						for (let prop in transaction.items) {
-							elems.push(
-								<div key={transaction.items[prop].name}>
-									<p className={styles.smallTitle}>{transaction.items[prop].name}</p>
-									{(() => {
-										let kids = [];
-										for (let itemProp in transaction.items[prop].items) {
-											kids.push(
-												<div className={styles.cartItemInfo} key={itemProp}>
-													<p className={styles.itemName}>
-														{transaction.items[prop].items[itemProp].name}
-													</p>
-													<p className={styles.itemPrice}>
-														{transaction.items[prop].items[itemProp].quantity}
-													</p>
-													<p className={styles.itemPrice}>
-														Ksh {transaction.items[prop].items[itemProp].price}
-													</p>
-													<p className={styles.itemPrice}>
-														Ksh {transaction.items[prop].items[itemProp].total}
-													</p>
-												</div>
-											)
-										}
-										return kids;
-									})()}
-								</div>
-							)
-						}
-						return elems;
-					})()}
-				</div>
+export default function CreatePDF() {
 
-				<hr className={styles.line} />
-				<div className={styles.itemInfo}>
-					<p className={styles.itemName}>
-						Order Total:
+	const transaction = JSON.parse(localStorage.getItem("transaction"))
+	
+	useEffect(() => {
+		window.print();
+		window.close();
+	}, [transaction])
+
+	return ( transaction &&
+		<div className={styles.invoicePOS}>
+			<div className={styles.topBar}>
+				<p>ID: {transaction._id}</p>
+			</div>
+			<center className={styles.top}>
+				<div className={styles.info}>
+					<h2>KIJANA MSAFI</h2>
+					<p>
+						P.O BOX 12454 - 00400 Nrb<br />
+						KRA PIN A0001230345T<br />
+						Tel: 0722697202<br />
 					</p>
-					<p className={styles.itemPrice}></p>
-					<p className={styles.itemPrice}></p>
-					<p className={styles.itemPrice}>Ksh {transaction.amount}</p>
 				</div>
-				{ transaction.customer_id && 
-					<div className={styles.userInfo}>
-						<p className={styles.smallTitle}>Customer Info</p>
-						<div className={styles.itemInfo}>
-							<p className={styles.itemPrice}>Name: </p>
-							<p className={styles.itemName}>{transaction.customer_id.name}</p>
-						</div>
-						<div className={styles.itemInfo}>
-							<p className={styles.itemPrice}>Loyalty points: </p>
-							<p className={styles.itemName}>{transaction.customer_id.commissionDue} points</p>
-						</div>
-					</div>
-				}
-				<div>
-					<div className={styles.footer}>
-						<p>Thanks & You're Always Welcome</p>
-						<p>Developed by LEAN SIGMA ANALYTICS LTD</p>
-						<p>Phone +254  708 440 459</p>
-					</div>
+			</center>
+
+			<div className={styles.info}>
+				<p className={styles.itemtext}>Served by: {transaction.recorded_by.name}</p>
+				<p className={styles.itemtext}>{new Date(transaction.createdAt).toString().slice(0, 25)}</p>
+			</div>
+
+			<div className={styles.bot}>
+
+				<div id={styles.table}>
+					<table>
+						<tr className={styles.tabletitle}>
+							<td className={styles.item}>
+								<h2>Item</h2>
+							</td>
+							<td className={styles.Hours}>
+								<h2>Qty</h2>
+							</td>
+							<td className={styles.Rate}>
+								<h2>Total</h2>
+							</td>
+						</tr>
+						{(() => {
+							let elems = [];
+							for (let prop in transaction.items) {
+								elems.push(
+									<>
+										<tr>
+											<td className={styles.item} colspan="3">
+												<p className={styles.itemtext}>{transaction.items[prop].name}</p>
+											</td>
+										</tr>
+										{(() => {
+											let kids = [];
+											for (let itemProp in transaction.items[prop].items) {
+												kids.push(
+													<tr key={itemProp}>
+														<td className={styles.tableitem}>
+															<p className={styles.itemtext}>{transaction.items[prop].items[itemProp].name}</p>
+														</td>
+														<td className={styles.tableitem}>
+															<p className={styles.itemtext}>{transaction.items[prop].items[itemProp].quantity}</p>
+														</td>
+														<td className={styles.tableitem}>
+															<p className={styles.itemtext}>{transaction.items[prop].items[itemProp].total}</p>
+														</td>
+													</tr>
+												)
+											}
+											return kids;
+										})()}
+									<tr className={styles.service} />
+									</>
+								)
+							}
+							return elems;
+						})()}
+						<tr className={styles.tabletitle}>
+							<td></td>
+							<td className={styles.Rate}>
+								<h2>Total</h2>
+							</td>
+							<td className={styles.payment}>
+								<h2>{KeShilling.format(transaction.amount)}</h2>
+							</td>
+						</tr>
+						<tr />
+						{ transaction.customer_id &&
+							<>
+							<tr className={styles.tabletitle}>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>Name</p>
+								</td>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>{transaction.customer_id.name}</p>
+								</td>
+							</tr>
+							<tr className={styles.tabletitle}>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>Points Earned</p>
+								</td>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>{transaction.commission}</p>
+								</td>
+							</tr>
+							{	transaction.redeemed &&
+								<tr className={styles.tabletitle}>
+									<td className={styles.tableitem}>
+										<p className={styles.itemtext}>Points Redeemed</p>
+									</td>
+									<td className={styles.tableitem}>
+										<p className={styles.itemtext}>{transaction.amount - transaction.redeemedTotal}</p>
+									</td>
+								</tr>
+							}
+							<tr className={styles.tabletitle}>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>Total points</p>
+								</td>
+								<td className={styles.tableitem}>
+									<p className={styles.itemtext}>{transaction.customer_id.commissionDue}</p>
+								</td>
+							</tr>
+							</>
+						}
+					</table>
+				</div>
+				<div className={styles.legalcopy}>
+					<p className={styles.itemtext}>Thanks & You're Always Welcome</p>
+					<p className={styles.itemtext}>Developed by LEAN SIGMA ANALYTICS LTD</p>
+					<p className={styles.itemtext}>Phone +254 708 440 459</p>
 				</div>
 			</div>
-		</div>
+		</div >
+		
 	)
 }

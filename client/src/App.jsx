@@ -14,6 +14,7 @@ const CreateUserForm = lazy(() => import('./pages/Users/CreateUser/CreateUserFor
 const TransactionList = lazy(() => import('./pages/Transactions/TransactionList/TransactionList'));
 const CreateTransaction = lazy(() => import('./pages/Transactions/CreateTransaction/CreateTransaction'));
 const ViewTransaction = lazy(() => import('./pages/Transactions/ViewTransaction/ViewTransaction'));
+const CreatePDF = lazy(() => import("./pages/Transactions/CreateTransaction/CreatePDF"));
 const ListMenuCategories = lazy(() => import('./pages/Menu/ListMenuCategories/ListMenuCategories'));
 const CreateMenuCategory = lazy(() => import('./pages/Menu/CreateMenuCategory/CreateMenuCategory'));
 const EditMenuCategory = lazy(() => import('./pages/Menu/EditMenuCategory/EditMenuCategory'));
@@ -54,6 +55,7 @@ function App() {
 							<Route path="/menu/categories/:id/items/new" element={<CreateMenuItem />} />
 							<Route path="/menu/items/:id" element={<EditMenuItem />} />
 						</Route>
+						<Route path="/transaction/:id/print" element={<CreatePDF />} />
 						<Route path="/forbidden" element={<p>Forbidden</p>} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/reset/password" element={<RequestPasswordReset />} />
