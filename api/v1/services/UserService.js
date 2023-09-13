@@ -141,7 +141,7 @@ const updateUserIncreaseLevel = async (user, underling=false) => {
 			if (underling) {
 				user = await User.updateUser(user._id, { nextLevelRank: nextLevel.rank + 1 });
 			}
-			if (referrals_made !== 0 && referrals_made % 5 === 0) {
+			if (referrals_made !== 0 && referrals_made % (user.nextLevelRank * MIN_REFERRALS_TO_ELEVATE_RANK) === 0) {
 				updatedUser = await User.updateUser(user._id, {level: nextLevel._id});
 				SMSHelper.sendLevelUpdateMsg(updatedUser, nextLevel);
 				updatedUser = await User.updateUser(updatedUser._id, {nextLevelRank: nextLevel.rank + 1});
